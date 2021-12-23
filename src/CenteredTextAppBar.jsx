@@ -10,9 +10,12 @@ import Typography from "@material-ui/core/Typography";
 import MenuIcon from '@material-ui/icons/Menu';
 import Brightness3Icon from "@material-ui/icons/Brightness3";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
-import {withStyles} from '@material-ui/core/styles';
+import {withStyles, createTheme, responsiveFontSizes, ThemeProvider} from '@material-ui/core/styles';
 
 import CollapsibleDrawer from './CollapsibleDrawer';
+
+let theme = createTheme();
+theme = responsiveFontSizes(theme);
 
 const styles = theme => ({
   centered: {
@@ -52,9 +55,11 @@ class CenteredTextAppBar extends Component {
 
             <div className={classes.centered}>
               <NavLink to="/" style={style_unset}>
-                <Typography variant="h4" style={{fontWeight: 'bold'}}>
-                  シ Bitcoin Satoshi Converter
-                </Typography>
+                <ThemeProvider theme={theme}>
+                  <Typography variant="h4" style={{fontWeight: 'bold'}}>
+                    シ Bitcoin Satoshi Converter
+                  </Typography>
+                </ThemeProvider>
               </NavLink>
             </div>
 
