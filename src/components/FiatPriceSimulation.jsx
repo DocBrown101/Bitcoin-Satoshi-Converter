@@ -21,7 +21,6 @@ export default function FiatPriceSimulation() {
   const oneFiatSats = SimulationStore((state) => state.oneFiatSats);
   const fiatPrice = SimulationStore((state) => state.fiatPrice);
   const sliderPrice = SimulationStore((state) => state.sliderPrice);
-
   const onInputChange = SimulationStore((state) => state.onInputChange);
   const onFiatPriceChange = SimulationStore((state) => state.onFiatPriceChange);
   const onSliderPriceChange = SimulationStore((state) => state.onSliderPriceChange);

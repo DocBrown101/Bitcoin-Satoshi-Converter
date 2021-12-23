@@ -24,9 +24,8 @@ export default function Converter() {
         <Box p={2}>
           <Box m="auto" textAlign="center">
             <Typography variant="h6">Betrag eingeben</Typography>
-            {oneFiatSats > 0
-              ?
-              <Typography color="secondary" variant="h6">
+            <Typography color="secondary" variant="h6">
+              {oneFiatSats > 0 ?
                 <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" mb={2}>
                   <NumberFormat value={oneFiatSats}
                     displayType={'text'}
@@ -36,13 +35,11 @@ export default function Converter() {
                     suffix={' シ Satoshi'}
                     thousandSeparator={'.'}
                     decimalSeparator={','} />
-                </Box >
-              </Typography>
-              :
-              <Typography color="secondary" variant="h6">
+                </Box>
+                :
                 <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" mb={2}>1 € ≙ ? Sats</Box>
-              </Typography>
-            }
+              }
+            </Typography>
           </Box>
           <Grid container justifyContent="center" item xs={12} spacing={0}>
             <InputElement label="€ Euro" value={convertedEuro} disabled={fiatPrice <= 0 ? true : false} onInputChange={onEuroInputChange} />
@@ -50,7 +47,7 @@ export default function Converter() {
             <InputElement label="シ Satoshi" value={convertedSatoshi} disabled={fiatPrice <= 0 ? true : false} onInputChange={onSatoshiInputChange} />
           </Grid>
         </Box>
-      </Paper>
-    </Box>
+      </Paper >
+    </Box >
   );
 }
