@@ -1,15 +1,9 @@
 import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
 
-import {withStyles} from '@material-ui/core/styles';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import HomeIcon from '@material-ui/icons/Home';
-import Settings from '@material-ui/icons/Settings';
+import {SwipeableDrawer, List, Divider, ListItem, ListItemIcon, ListItemText} from '@mui/material';
+import {Home as HomeIcon, Settings} from '@mui/icons-material';
+import {withStyles} from '@mui/styles';
 
 const styles = {
   list: {

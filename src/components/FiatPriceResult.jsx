@@ -1,11 +1,8 @@
 import React from 'react';
 import NumberFormat from 'react-number-format';
 
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import CachedIcon from '@material-ui/icons/Cached';
-import Typography from "@material-ui/core/Typography";
+import {Box, Grid, Button, Typography} from '@mui/material';
+import {Cached as CachedIcon} from '@mui/icons-material';
 
 export default function FiatPriceResult(props) {
   return (
@@ -13,7 +10,7 @@ export default function FiatPriceResult(props) {
       <Box textAlign="center"
         border={1}
         borderColor="primary.main"
-        borderRadius={4}
+        borderRadius={1}
         bgcolor="background.paper"
         pt={2}
         pb={2}

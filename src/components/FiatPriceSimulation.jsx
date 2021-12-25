@@ -1,14 +1,8 @@
 import React from 'react';
 import NumberFormat from "react-number-format";
 
-import Box from '@material-ui/core/Box';
-import Paper from "@material-ui/core/Paper";
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
-import Input from '@material-ui/core/Input';
-import EuroIcon from '@material-ui/icons/Euro';
-import Container from '@material-ui/core/Container';
+import {Box, Paper, Grid, Typography, Slider, Input, Container} from '@mui/material';
+import {Euro as EuroIcon} from '@mui/icons-material';
 
 import SimulationStore from "../stores/SimulationStore";
 import InputElement from './InputElement';

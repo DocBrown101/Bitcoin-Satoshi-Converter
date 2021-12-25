@@ -1,8 +1,6 @@
 import React from 'react';
 
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import {Grid, Paper, Typography} from '@mui/material';
 
 export default function NotFoundPage() { // Stateless Component
   return (
@@ -13,11 +11,11 @@ export default function NotFoundPage() { // Stateless Component
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{minHeight: '30vh'}}
+        sx={{minHeight: '30vh'}}
       >
-        <Grid item xs={6} style={{maxWidth: '90vw'}}>
-          <Paper style={{marginTop: "10px", textAlign: "center"}}>
-            <Typography variant="h4" gutterBottom style={{padding: "10px"}}>
+        <Grid item xs={6} sx={{maxWidth: '90vw'}}>
+          <Paper sx={{marginTop: "10px", textAlign: "center"}}>
+            <Typography variant="h4" gutterBottom sx={{padding: "10px"}}>
               {"404 Page not found!"}
             </Typography>
           </Paper>

@@ -1,10 +1,7 @@
 import React from 'react';
 import NumberFormat from "react-number-format";
 
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import {Box, Grid, Paper, Typography} from '@mui/material';
 
 import ConverterStore from "../stores/ConverterStore";
 import InputElement from './InputElement';

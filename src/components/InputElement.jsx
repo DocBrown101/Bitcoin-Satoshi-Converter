@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
-
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import InputIcon from '@material-ui/icons/Input';
-import TextField from "@material-ui/core/TextField";
 import NumberFormat from "react-number-format";
-import {withStyles} from '@material-ui/core/styles';
+
+import {Box, InputAdornment, Grid, TextField} from '@mui/material';
+import {Input as InputIcon} from '@mui/icons-material';
+import {withStyles} from '@mui/styles';
 
 const styles = theme => ({
   inputAdornmentColor: {
@@ -44,7 +41,7 @@ class InputElement extends Component {
     return (
       <React.Fragment>
         <Grid item xs={2} sm={3} md={4} />
-        <Grid item xs={8} sm={6} md={4} style={{maxWidth: "275px"}}>
+        <Grid item xs={8} sm={6} md={4} style={{maxWidth: "300px"}}>
           <Box textAlign="center" mb={2}>
             <TextField
               id={this.props.label}
@@ -56,7 +53,7 @@ class InputElement extends Component {
               InputProps={{
                 className: classes.inputAdornmentColor,
                 startAdornment: (
-                  <InputAdornment position="start">
+                  <InputAdornment disablePointerEvents="true" position="start">
                     <InputIcon />
                   </InputAdornment>
                 ),

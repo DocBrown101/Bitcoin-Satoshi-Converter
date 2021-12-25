@@ -1,10 +1,6 @@
 import React from 'react';
 
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Paper from "@material-ui/core/Paper";
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
+import {InputLabel, Paper, Box, Button, Container, FormControl, Select, MenuItem} from '@mui/material';
 
 export default function TestPage() { // Stateless Component
   return (
@@ -21,31 +17,23 @@ export default function TestPage() { // Stateless Component
       <Container maxWidth="sm">
         <Paper>
           <Box p={2}>
-            <Grid container justifyContent="center" item xs={12} spacing={0}>
-              <Grid item xs={4} />
-              <Grid item xs={4}>
-                <Box textAlign="center">
-                  Betrag eingeben:
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box textAlign="left">
-                  € Euro
-                </Box>
-              </Grid>
-
-              <Grid item xs={4} />
-              <Grid item xs={4}>
-                <Box textAlign="center">
-                  Betrag eingeben:
-                </Box>
-              </Grid>
-              <Grid item xs={4}>
-                <Box textAlign="left">
-                  ฿ Bitcoin
-                </Box>
-              </Grid>
-            </Grid>
+            <FormControl fullWidth>
+              <InputLabel id="api">Verwendete Preis-API</InputLabel>
+              <Select
+                label="Verwendete Preis-API"
+                MenuProps={{
+                  sx: {
+                    "&& .Mui-selected": {
+                      color: "primary.contrastText",
+                      backgroundColor: "primary.main"
+                    }
+                  }
+                }}
+              >
+                <MenuItem value={10}>https://api.coingecko.com</MenuItem>
+                <MenuItem value={20}>https://min-api.cryptocompare.com</MenuItem>
+              </Select>
+            </FormControl>
           </Box>
         </Paper>
       </Container>

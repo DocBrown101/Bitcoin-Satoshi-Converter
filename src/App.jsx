@@ -1,12 +1,8 @@
 import React from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
-import {createTheme, ThemeProvider} from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import {CssBaseline, Container, Box, Paper, Typography} from '@mui/material';
+import {ThemeProvider, createTheme} from '@mui/material/styles';
 
 import HomePage from "./components/pages/HomePage";
 import TestPage from "./components/pages/TestPage";
@@ -63,9 +59,10 @@ const FooterComponent = () => {
 
 export const light = {
   palette: {
-    type: 'light',
+    mode: 'light',
     primary: {
       main: '#FF9800',
+      contrastText: '#121212',
     },
     secondary: {
       main: '#008000',
@@ -74,12 +71,13 @@ export const light = {
 };
 export const dark = {
   palette: {
-    type: 'dark',
+    mode: 'dark',
     primary: {
       main: '#FF9800',
+      contrastText: '#121212',
     },
     secondary: {
-      main: '#008000',
+      main: '#00a600',
     },
   },
 };

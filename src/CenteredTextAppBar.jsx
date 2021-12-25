@@ -2,15 +2,10 @@ import React, {Component} from 'react';
 import {NavLink} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Box from '@material-ui/core/Box';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import MenuIcon from '@material-ui/icons/Menu';
-import Brightness3Icon from "@material-ui/icons/Brightness3";
-import Brightness7Icon from "@material-ui/icons/Brightness7";
-import {withStyles, createTheme, responsiveFontSizes, ThemeProvider} from '@material-ui/core/styles';
+import {IconButton, Box, Toolbar, Tooltip, Typography} from '@mui/material';
+import {Menu as MenuIcon, Brightness3 as Brightness3Icon, Brightness7 as Brightness7Icon} from '@mui/icons-material';
+import {ThemeProvider, createTheme, responsiveFontSizes} from '@mui/material/styles';
+import {withStyles} from '@mui/styles';
 
 import CollapsibleDrawer from './CollapsibleDrawer';
 
@@ -47,7 +42,7 @@ class CenteredTextAppBar extends Component {
     const style_unset = {all: "unset"};
     return (
       <div>
-        <Box borderRadius={4} mt={3} color="#000000DE" bgcolor="primary.main">
+        <Box borderRadius={1} mt={3} color="primary.contrastText" bgcolor="primary.main">
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
               <MenuIcon />
@@ -56,7 +51,7 @@ class CenteredTextAppBar extends Component {
             <div className={classes.centered}>
               <NavLink to="/" style={style_unset}>
                 <ThemeProvider theme={theme}>
-                  <Typography variant="h4" style={{fontWeight: 'bold'}}>
+                  <Typography variant="h4" sx={{fontWeight: 'bold'}}>
                     シ Bitcoin Satoshi Converter
                   </Typography>
                 </ThemeProvider>

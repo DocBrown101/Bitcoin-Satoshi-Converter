@@ -2,9 +2,8 @@ import React from 'react';
 import {QueryClientProvider, useQuery} from 'react-query';
 import {ReactQueryDevtools} from "react-query/devtools";
 
-import Button from '@material-ui/core/Button';
-import CachedIcon from '@material-ui/icons/Cached';
-import CircularProgress from "@material-ui/core/CircularProgress";
+import {Button, CircularProgress} from '@mui/material';
+import {Cached as CachedIcon} from '@mui/icons-material';
 
 import ConverterStore from "../stores/ConverterStore";
 import FiatPriceResult from './FiatPriceResult';
