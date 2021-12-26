@@ -2,14 +2,24 @@ import React from 'react';
 
 import {InputLabel, Paper, Box, Button, Container, FormControl, Select, MenuItem} from '@mui/material';
 
+import {useLocalStorage} from '../../services/LocalStorage';
+
 export default function TestPage() { // Stateless Component
+  const [apiID, setApiID] = useLocalStorage("api-ID", 10);
+
+  const handleChange = (event) => {
+    setApiID(event.target.value);
+  };
+
   return (
     <div>
       <Container maxWidth="sm">
         <Paper>
-          <Box m={2} p={2} textAlign="center">
-            <Button color="primary">primary</Button>
-            <Button color="secondary">secondary</Button>
+          <Box sx={{m: 1}} textAlign="center">
+            <Button sx={{m: 1}} color="primary">primary</Button>
+            <Button sx={{m: 1}} color="secondary">secondary</Button>
+            <Button sx={{m: 1}} variant="contained" color="primary">primary</Button>
+            <Button sx={{m: 1}} variant="contained" color="secondary">secondary</Button>
           </Box>
         </Paper>
       </Container>
@@ -18,9 +28,12 @@ export default function TestPage() { // Stateless Component
         <Paper>
           <Box p={2}>
             <FormControl fullWidth>
-              <InputLabel id="api">Verwendete Preis-API</InputLabel>
+              <InputLabel id="api-label">Verwendete Preis-API</InputLabel>
               <Select
+                id="api"
                 label="Verwendete Preis-API"
+                value={apiID}
+                onChange={handleChange}
                 MenuProps={{
                   sx: {
                     "&& .Mui-selected": {

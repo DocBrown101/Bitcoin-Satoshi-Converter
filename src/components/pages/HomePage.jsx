@@ -1,5 +1,4 @@
 import React from "react";
-import {QueryClient} from 'react-query';
 
 import {Container, Tab} from '@mui/material';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
@@ -9,15 +8,6 @@ import FiatPriceQuery from "../FiatPriceQuery";
 import FiatPriceSimulation from "../FiatPriceSimulation";
 
 export default function HomePage() {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        cacheTime: 5 * 60 * 1000,
-        staleTime: 5 * 60 * 1000,
-      },
-    },
-  });
-
   const [tabValue, setTabValue] = React.useState("1");
 
   const handleChange = (event, newValue) => {
@@ -33,7 +23,7 @@ export default function HomePage() {
         </TabList>
         <TabPanel value="1" sx={{padding: '0px'}}>
           <Converter />
-          <FiatPriceQuery queryClient={queryClient} />
+          <FiatPriceQuery />
         </TabPanel>
         <TabPanel value="2" sx={{padding: '0px'}}>
           <FiatPriceSimulation />

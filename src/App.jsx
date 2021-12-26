@@ -1,5 +1,7 @@
 import React from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {QueryClient, QueryClientProvider} from 'react-query';
+import {ReactQueryDevtools} from "react-query/devtools";
 
 import {CssBaseline, Container, Box, Paper, Typography} from '@mui/material';
 import {ThemeProvider, createTheme} from '@mui/material/styles';
@@ -10,35 +12,41 @@ import SettingsPage from "./components/pages/SettingsPage";
 import NotFoundPage from "./components/pages/NotFoundPage";
 
 import CenteredTextAppBar from "./CenteredTextAppBar";
+import {useLocalStorage} from './services/LocalStorage';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 5 * 60 * 1000,
+      staleTime: 5 * 60 * 1000,
+    },
+  },
+});
 
 export default function App() {
-  const [isDarkTheme, setIsDarkTheme] = React.useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useLocalStorage("isDarkTheme", false);
+
   const appliedTheme = createTheme(isDarkTheme ? dark : light);
 
-  React.useEffect(() => {
-    setIsDarkTheme(JSON.parse(window.localStorage.getItem('isDarkTheme')));
-  }, []);
-
-  React.useEffect(() => {
-    window.localStorage.setItem('isDarkTheme', isDarkTheme);
-  }, [isDarkTheme]);
-
   return (
-    <ThemeProvider theme={appliedTheme}>
-      <CssBaseline />
-      <Router>
-        <Container maxWidth="md">
-          <CenteredTextAppBar useStateCallback={setIsDarkTheme} isDarkTheme={isDarkTheme} />
-        </Container>
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/test' element={<TestPage />} />
-          <Route path='/settings' element={<SettingsPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-        <FooterComponent />
-      </Router>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={appliedTheme}>
+        <CssBaseline />
+        <Router>
+          <Container maxWidth="md">
+            <CenteredTextAppBar isDarkTheme={isDarkTheme} useStateCallback={setIsDarkTheme} />
+          </Container>
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/test' element={<TestPage />} />
+            <Route path='/settings' element={<SettingsPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+          <FooterComponent />
+          <ReactQueryDevtools />
+        </Router>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 
