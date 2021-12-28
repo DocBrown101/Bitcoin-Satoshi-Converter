@@ -34,14 +34,14 @@ export default function Converter() {
                     decimalSeparator={','} />
                 </Box>
                 :
-                <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" mb={2}>1 € ≙ ? Sats</Box>
+                <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" mb={2}>1 € ≙ ? Satoshi</Box>
               }
             </Typography>
           </Box>
           <Grid container justifyContent="center" item xs={12} spacing={0}>
-            <InputElement label="€ Euro" value={convertedEuro} disabled={fiatPrice <= 0 ? true : false} onInputChange={onEuroInputChange} />
-            <InputElement label="฿ Bitcoin" value={convertedBitcoin} disabled={fiatPrice <= 0 ? true : false} onInputChange={onBitcoinInputChange} />
-            <InputElement label="シ Satoshi" value={convertedSatoshi} disabled={fiatPrice <= 0 ? true : false} onInputChange={onSatoshiInputChange} />
+            <InputElement label="€ Euro" endLabel="EUR" value={convertedEuro} disabled={fiatPrice <= 0 ? true : false} onInputChange={onEuroInputChange} />
+            <InputElement label="฿ Bitcoin" endLabel="BTC" value={convertedBitcoin} disabled={fiatPrice <= 0 ? true : false} onInputChange={onBitcoinInputChange} />
+            <InputElement label="シ Satoshi" endLabel="sat" value={convertedSatoshi} disabled={fiatPrice <= 0 ? true : false} onInputChange={onSatoshiInputChange} />
           </Grid>
         </Box>
       </Paper >

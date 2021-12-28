@@ -77,6 +77,7 @@ class CenteredTextAppBar extends Component {
 
 CenteredTextAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
+  isDarkTheme: PropTypes.bool,
 };
 
 export default withStyles(styles, {withTheme: true})(CenteredTextAppBar);

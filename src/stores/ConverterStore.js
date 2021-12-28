@@ -10,19 +10,22 @@ const useStore = create((set) => ({
     set(() => ({fiatPrice: fiatPrice}));
     set(() => ({oneFiatSats: ((1 / fiatPrice) * 100000000).toFixed(0)}));
   },
-  onEuroInputChange: (event) => {
-    set((state) => ({convertedBitcoin: parseFloat((event.target.value / state.fiatPrice).toFixed(8))}));
-    set((state) => ({convertedSatoshi: ((event.target.value / state.fiatPrice) * 100000000).toFixed(0)}));
+  onEuroInputChange: (values) => {
+    const {value} = values;
+    set((state) => ({convertedBitcoin: parseFloat((value / state.fiatPrice).toFixed(8))}));
+    set((state) => ({convertedSatoshi: ((value / state.fiatPrice) * 100000000).toFixed(0)}));
     set(() => ({convertedEuro: undefined}));
   },
-  onBitcoinInputChange: (event) => {
-    set(() => ({convertedSatoshi: (event.target.value * 100000000).toFixed(0)}));
-    set((state) => ({convertedEuro: (event.target.value * state.fiatPrice).toFixed(2)}));
+  onBitcoinInputChange: (values) => {
+    const {value} = values;
+    set(() => ({convertedSatoshi: (value * 100000000).toFixed(0)}));
+    set((state) => ({convertedEuro: (value * state.fiatPrice).toFixed(2)}));
     set(() => ({convertedBitcoin: undefined}));
   },
-  onSatoshiInputChange: (event) => {
-    set(() => ({convertedBitcoin: parseFloat((event.target.value / 100000000).toFixed(8))}));
-    set((state) => ({convertedEuro: ((event.target.value * state.fiatPrice) / 100000000).toFixed(2)}));
+  onSatoshiInputChange: (values) => {
+    const {value} = values;
+    set(() => ({convertedBitcoin: parseFloat((value / 100000000).toFixed(8))}));
+    set((state) => ({convertedEuro: ((value * state.fiatPrice) / 100000000).toFixed(2)}));
     set(() => ({convertedSatoshi: undefined}));
   }
 }));

@@ -16,7 +16,8 @@ class InputElement extends Component {
               id={this.props.label}
               label={this.props.label}
               value={this.props.value}
-              onChange={this.props.onInputChange}
+              //onChange={this.props.onInputChange}
+              onValueChange={this.props.onInputChange}
               disabled={this.props.disabled}
               customInput={TextField}
               inputMode="numeric"
@@ -33,7 +34,7 @@ class InputElement extends Component {
                 ),
                 endAdornment: (
                   <InputAdornment disablePointerEvents={true} position="end">
-                    {this.props.label}
+                    {this.props.endLabel}
                   </InputAdornment>
                 ),
                 autoComplete: 'new-password',
