@@ -4,26 +4,22 @@ import PropTypes from 'prop-types';
 
 import {IconButton, Box, Toolbar, Tooltip, Typography} from '@mui/material';
 import {Menu as MenuIcon, Brightness3 as Brightness3Icon, Brightness7 as Brightness7Icon} from '@mui/icons-material';
-import {ThemeProvider, createTheme, responsiveFontSizes} from '@mui/material/styles';
 import {withStyles} from '@mui/styles';
 
 import CollapsibleDrawer from './CollapsibleDrawer';
 
-let theme = createTheme();
-theme = responsiveFontSizes(theme);
-
-const styles = theme => ({
+const styles = {
   centered: {
     flexGrow: 1,
     textAlign: 'center',
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
+    paddingTop: "24px",
+    paddingBottom: "24px",
     cursor: "default",
     '&::selection': {
       backgroundColor: 'transparent',
     },
   },
-});
+};
 
 class CenteredTextAppBar extends Component {
 
@@ -42,28 +38,24 @@ class CenteredTextAppBar extends Component {
     const style_unset = {all: "unset"};
     return (
       <div>
-        <Box borderRadius={1} mt={3} color="primary.contrastText" bgcolor="primary.main">
+        <Box borderRadius={1} mt={3} p={0} color="primary.contrastText" bgcolor="primary.main">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
-              <MenuIcon />
-            </IconButton>
+            <Tooltip title="Menu">
+              <IconButton color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
+                <MenuIcon />
+              </IconButton>
+            </Tooltip>
 
             <div className={classes.centered}>
               <NavLink to="/" style={style_unset}>
-                <ThemeProvider theme={theme}>
-                  <Typography variant="h4" sx={{fontWeight: 'bold'}}>
-                    シ Bitcoin Satoshi Converter
-                  </Typography>
-                </ThemeProvider>
+                <Typography variant="h4" sx={{fontWeight: 'bold'}}>
+                  シ Bitcoin Converter ₿
+                </Typography>
               </NavLink>
             </div>
 
             <Tooltip title={this.props.isDarkTheme ? 'Light Theme' : 'Dark Theme'}>
-              <IconButton
-                edge="end"
-                color="inherit"
-                aria-label="mode"
-                onClick={() => this.props.useStateCallback(!this.props.isDarkTheme)}>
+              <IconButton color="inherit" aria-label="Theme" onClick={() => this.props.useStateCallback(!this.props.isDarkTheme)}>
                 {this.props.isDarkTheme ? <Brightness7Icon /> : <Brightness3Icon />}
               </IconButton>
             </Tooltip>
@@ -80,4 +72,4 @@ CenteredTextAppBar.propTypes = {
   isDarkTheme: PropTypes.bool,
 };
 
-export default withStyles(styles, {withTheme: true})(CenteredTextAppBar);
+export default withStyles(styles)(CenteredTextAppBar);

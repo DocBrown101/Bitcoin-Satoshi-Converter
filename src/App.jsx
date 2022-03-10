@@ -6,10 +6,10 @@ import {ReactQueryDevtools} from "react-query/devtools";
 import {CssBaseline, Container, Box, Paper, Typography} from '@mui/material';
 import {ThemeProvider, createTheme} from '@mui/material/styles';
 
-import HomePage from "./components/pages/HomePage";
-import TestPage from "./components/pages/TestPage";
-import SettingsPage from "./components/pages/SettingsPage";
-import NotFoundPage from "./components/pages/NotFoundPage";
+import HomePage from "./pages/HomePage";
+import TestPage from "./pages/TestPage";
+import SettingsPage from "./pages/SettingsPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 import CenteredTextAppBar from "./CenteredTextAppBar";
 import {useLocalStorage} from './services/LocalStorage';
