@@ -20,7 +20,6 @@ export default function Converter() {
       <Paper>
         <Box p={2}>
           <Box m="auto" textAlign="center">
-            <Typography variant="h6">Betrag eingeben</Typography>
             <Typography color="secondary" variant="h6">
               {oneFiatSats > 0 ?
                 <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" mb={2}>
@@ -37,6 +36,7 @@ export default function Converter() {
                 <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" mb={2}>1 € ≙ ? Satoshi</Box>
               }
             </Typography>
+            <Typography variant="h6">Betrag eingeben</Typography>
           </Box>
           <Grid container justifyContent="center" item xs={12} spacing={0}>
             <InputElement label="€ Euro" endLabel="EUR" value={convertedEuro} disabled={fiatPrice <= 0 ? true : false} onInputChange={onEuroInputChange} />
