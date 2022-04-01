@@ -1,26 +1,41 @@
-import React from 'react';
+import React from "react";
 
-import {Grid, Paper, Typography} from '@mui/material';
+import {InputLabel, Paper, Box, Grid, Container, FormControl, Select, MenuItem, Typography} from "@mui/material";
 
-export default function SettingsPage() { // Stateless Component
+import {useLocalStorage} from "../services/LocalStorage";
+
+export default function SettingsPage() {
+  const [apiID, setApiID] = useLocalStorage("api-ID", 10);
+
+  const handleChange = (event) => {setApiID(event.target.value);};
+
   return (
     <div>
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        sx={{minHeight: '30vh'}}
-      >
-        <Grid item xs={6} sx={{maxWidth: '90vw'}}>
-          <Paper sx={{marginTop: "10px", textAlign: "center"}}>
-            <Typography variant="h4" gutterBottom sx={{padding: "10px"}}>
-              {"Settings ..."}
-            </Typography>
-          </Paper>
+      <Container maxWidth="md">
+        <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" sx={{minHeight: "10vh"}}>
+          <Typography variant="h4">{"Settings"}</Typography>
         </Grid>
-      </Grid>
+        <Paper>
+          <Box p={2}>
+            <FormControl fullWidth>
+              <InputLabel id="api-label">Verwendete Preis-API</InputLabel>
+              <Select id="api" label="Verwendete Preis-API" value={apiID} onChange={handleChange}
+                MenuProps={{
+                  sx: {
+                    "&& .Mui-selected": {
+                      color: "primary.contrastText",
+                      backgroundColor: "primary.main",
+                    },
+                  },
+                }}
+              >
+                <MenuItem value={10}>https://min-api.cryptocompare.com</MenuItem>
+                <MenuItem value={20}>https://api.coingecko.com</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </Paper>
+      </Container>
     </div>
   );
 }

@@ -4,32 +4,24 @@ import {useQuery, useQueryClient} from 'react-query';
 import {Button, CircularProgress} from '@mui/material';
 import {Cached as CachedIcon} from '@mui/icons-material';
 
-import {readLocalStorage} from '../services/LocalStorage';
+import {fetchFiatPrice} from '../services/FiatPriceApi';
 import ConverterStore from "../stores/ConverterStore";
 import FiatPriceResult from './FiatPriceResult';
 
 export default function FiatPriceQuery() {
-  const resultEUR = useQuery('fetchEurPrice', fetchFiatPrice("EUR"));
-  const resultUSD = useQuery('fetchUsdPrice', fetchFiatPrice("USD"));
+  const fetchResult = useQuery('fetchFiatPrice', fetchFiatPrice(), {refetchOnMount: "always"});
   const setFiatPrice = ConverterStore((state) => state.setFiatPrice);
 
   // React.useEffect is required, otherwise results in a console error
   React.useEffect(() => {
-    if (resultEUR && resultEUR.data && resultEUR.data.EUR) {
-      setFiatPrice(resultEUR.data.EUR);
+    if (fetchResult && fetchResult.data && fetchResult.data.EUR) {
+      setFiatPrice(fetchResult.data.EUR);
     }
-  }, [resultEUR, setFiatPrice]);
+  }, [fetchResult, setFiatPrice]);
 
-  if (resultEUR.isLoading || resultUSD.isLoading) return (<FiatPriceResult />);
-  else if (resultEUR.error) return (<FiatPriceResult error={resultEUR.error.message} />);
-  else if (resultUSD.error) return (<FiatPriceResult error={resultUSD.error.message} />);
-  else return (<FiatPriceResult eur={resultEUR.data.EUR} usd={resultUSD.data.USD} loadingButton={<RefreshButton />} />);
-}
-
-function fetchFiatPrice(tsyms) {
-  const id = readLocalStorage("api-ID", 10);
-  console.log(id);
-  return () => fetch("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=" + tsyms).then(res => res.json());
+  if (fetchResult.isLoading) return (<FiatPriceResult />);
+  else if (fetchResult.error) return (<FiatPriceResult error={fetchResult.error.message} />);
+  else return (<FiatPriceResult eur={fetchResult.data.EUR} usd={fetchResult.data.USD} api={fetchResult.data.API} loadingButton={<RefreshButton />} />);
 }
 
 const RefreshButton = () => {
@@ -38,7 +30,7 @@ const RefreshButton = () => {
 
   React.useEffect(() => {
     if (isLoading) {
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries('fetchFiatPrice');
       setTimeout(() => {
         setLoading(false);
       }, 1000);
