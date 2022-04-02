@@ -1,5 +1,6 @@
 import React from 'react';
 import NumberFormat from "react-number-format";
+import {useTranslation} from "react-i18next";
 
 import {Box, Paper, Grid, Typography, Slider, Input, Container} from '@mui/material';
 import {Euro as EuroIcon} from '@mui/icons-material';
@@ -27,12 +28,13 @@ export default function FiatPriceSimulation() {
     }
   };
 
+  const {t} = useTranslation();
   return (
     <React.Fragment>
       <Container maxWidth="sm">
         <Paper>
           <Box m={2} p={2} textAlign="center">
-            <Typography variant="h6">Preis Simulation für EINEN Bitcoin</Typography>
+            <Typography variant="h6">{t("PriceSimulation")}</Typography>
             <Typography color="secondary" variant="h6">
               <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" mb={2}>
                 <NumberFormat value={oneFiatSats}

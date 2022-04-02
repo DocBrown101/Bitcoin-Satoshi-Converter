@@ -1,0 +1,18 @@
+{
+  "title": "Willkommen",
+  "converter": "Konverter",
+  "EnterAmount": "Betrag eingeben",
+  "language": "Sprache",
+  "settings": "Einstellungen",
+  "ApiLabel": "Verwendete Preis-API",
+  "CurrentPrice": "Aktueller Preis für einen Bitcoin",
+  "LoadingCurrentPrice": "Lade aktuellen Preis ...",
+  "PleaseWait": "Bitte warten!",
+  "AnErrorHasOccurred": "Es ist ein Fehler aufgetreten:",
+  "PriceSimulation": "Preis Simulation für EINEN Bitcoin",
+  "PageNotFound": "Seite nicht gefunden!",
+  "footer": {
+    "line1": "1 Bitcoin kann 100 Millionen Mal geteilt werden!",
+    "line2": "Daraufhin erhält man einen Satoshi."
+  }  
+}

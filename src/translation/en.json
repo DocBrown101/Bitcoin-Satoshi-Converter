@@ -1,0 +1,18 @@
+{
+  "title": "Welcome",
+  "converter": "Converter",
+  "EnterAmount": "Enter amount",
+  "language": "Language",
+  "settings": "Settings",
+  "ApiLabel": "Price API used",
+  "CurrentPrice": "Current price for one bitcoin",
+  "LoadingCurrentPrice": "Loading current price ...",
+  "PleaseWait": "Please wait!",
+  "AnErrorHasOccurred": "An error has occurred:",
+  "PriceSimulation": "Price Simulation for ONE Bitcoin",
+  "PageNotFound": "Page not found!",
+  "footer": {
+    "line1": "1 Bitcoin can be shared 100 million times!",
+    "line2": "You will then receive one Satoshi."
+  }
+}

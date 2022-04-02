@@ -1,4 +1,5 @@
 import React from "react";
+import {useTranslation} from "react-i18next";
 
 import {Container, Tab} from '@mui/material';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
@@ -14,11 +15,12 @@ export default function HomePage() {
     setTabValue(newValue);
   };
 
+  const {t} = useTranslation();
   return (
     <Container maxWidth="md">
       <TabContext value={tabValue}>
         <TabList onChange={handleChange} aria-label="Tabs" centered>
-          <Tab label="Converter" value="1" />
+          <Tab label={t("converter")} value="1" />
           <Tab label="Simulation" value="2" />
         </TabList>
         <TabPanel value="1" sx={{padding: '0px'}}>

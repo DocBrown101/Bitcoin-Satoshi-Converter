@@ -1,5 +1,6 @@
 import React from 'react';
 import NumberFormat from "react-number-format";
+import {useTranslation} from "react-i18next";
 
 import {Box, Grid, Paper, Typography} from '@mui/material';
 
@@ -15,6 +16,7 @@ export default function Converter() {
   const onEuroInputChange = ConverterStore((state) => state.onEuroInputChange);
   const onBitcoinInputChange = ConverterStore((state) => state.onBitcoinInputChange);
   const onSatoshiInputChange = ConverterStore((state) => state.onSatoshiInputChange);
+  const {t} = useTranslation();
   return (
     <Box my={2}>
       <Paper>
@@ -36,7 +38,7 @@ export default function Converter() {
                 <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" mb={2}>1 € ≙ ? Satoshi</Box>
               }
             </Typography>
-            <Typography variant="h6">Betrag eingeben</Typography>
+            <Typography variant="h6">{t("EnterAmount")}</Typography>
           </Box>
           <Grid container justifyContent="center" item xs={12} spacing={0}>
             <InputElement label="€ Euro" endLabel="EUR" value={convertedEuro} disabled={fiatPrice <= 0 ? true : false} onInputChange={onEuroInputChange} />

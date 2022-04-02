@@ -2,16 +2,19 @@ import React from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {ReactQueryDevtools} from "react-query/devtools";
+import {useTranslation} from "react-i18next";
 
 import {CssBaseline, Container, Box, Paper, Typography} from '@mui/material';
 import {ThemeProvider, createTheme} from '@mui/material/styles';
+
+import "./translation/i18n";
 
 import HomePage from "./pages/HomePage";
 import TestPage from "./pages/TestPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
-import CenteredTextAppBar from "./CenteredTextAppBar";
+import HeaderToolbar from "./HeaderToolbar";
 import {useLocalStorage} from './services/LocalStorage';
 
 const queryClient = new QueryClient({
@@ -33,9 +36,7 @@ export default function App() {
       <ThemeProvider theme={appliedTheme}>
         <CssBaseline />
         <Router>
-          <Container maxWidth="md">
-            <CenteredTextAppBar isDarkTheme={isDarkTheme} useStateCallback={setIsDarkTheme} />
-          </Container>
+          <HeaderToolbar isDarkTheme={isDarkTheme} useStateCallback={setIsDarkTheme} />
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/test' element={<TestPage />} />
@@ -51,13 +52,14 @@ export default function App() {
 }
 
 const FooterComponent = () => {
+  const {t} = useTranslation();
   return (
     <footer>
       <Container maxWidth="md">
         <Paper>
           <Box p={2} m={2} textAlign="center">
-            <Typography variant="body1" color="inherit">1 Bitcoin kann 100 Millionen Mal geteilt werden!</Typography>
-            <Typography variant="body1" color="inherit">Daraufhin erhält man einen Satoshi.</Typography>
+            <Typography variant="body1" color="inherit">{t("footer.line1")}</Typography>
+            <Typography variant="body1" color="inherit">{t("footer.line2")}</Typography>
           </Box>
         </Paper>
       </Container>

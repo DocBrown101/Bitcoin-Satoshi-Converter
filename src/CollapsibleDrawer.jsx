@@ -1,78 +1,38 @@
-import React, {Component} from 'react';
-import {NavLink} from 'react-router-dom';
+import React from 'react';
+import {Link} from 'react-router-dom';
+import {useTranslation} from "react-i18next";
 
 import {SwipeableDrawer, List, Divider, ListItem, ListItemIcon, ListItemText} from '@mui/material';
 import {Home as HomeIcon, Settings} from '@mui/icons-material';
-import {withStyles} from '@mui/styles';
 
-const styles = {
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
-};
+export default function CollapsibleDrawer(props) {
+  const {t} = useTranslation();
+  const drawerList = (
+    <List sx={{width: 200, p: 0}}>
+      <ListItem sx={{minHeight: 100}} button component={Link} to="/">
+        <ListItemIcon><HomeIcon /></ListItemIcon>
+        <ListItemText primary={t("converter")} />
+      </ListItem>
 
-class CollapsibleDrawer extends Component {
-  render() {
+      <Divider />
 
-    const {classes} = this.props;
-    const style_unset = {all: "unset"};
+      <ListItem button component={Link} to="/settings">
+        <ListItemIcon><Settings /></ListItemIcon>
+        <ListItemText primary={t("settings")} />
+      </ListItem>
+    </List>
+  );
 
-    const sideList = (
-      <div className={classes.list}>
-        <List>
-
-          <NavLink to="/" style={style_unset}>
-            <ListItem button key={'Home'}>
-              <ListItemIcon><HomeIcon /></ListItemIcon>
-              <ListItemText primary={'Home'} />
-            </ListItem>
-          </NavLink>
-
-          {/* <NavLink exact to="/test" style={style_unset}>
-            <ListItem button key={'TestPage'}>
-              <ListItemIcon><SearchIcon /></ListItemIcon>
-              <ListItemText primary={'TestPage'} />
-            </ListItem>
-          </NavLink> */}
-
-        </List>
-        <Divider />
-        <List>
-
-          <NavLink to="/settings" style={style_unset}>
-            <ListItem button key={'Settings'}>
-              <ListItemIcon><Settings /></ListItemIcon>
-              <ListItemText primary={'Settings'} />
-            </ListItem>
-          </NavLink>
-
-          {/* <ListItem button key={'Version'}>
-            <ListItemIcon><CloudIcon /></ListItemIcon>
-            <ListItemText primary={'Version'} secondary={"v0.1"} />
-          </ListItem> */}
-
-        </List>
+  return (
+    <SwipeableDrawer open={props.isDrawerOpen} onClose={props.toggleDrawer(false)} onOpen={props.toggleDrawer(true)}>
+      <div
+        tabIndex={0}
+        role="button"
+        onClick={props.toggleDrawer(false)}
+        onKeyDown={props.toggleDrawer(false)}
+      >
+        {drawerList}
       </div>
-    );
-
-    return (
-      <div>
-        <SwipeableDrawer open={this.props.isDrawerOpen} onClose={this.props.toggleDrawer(false)} onOpen={this.props.toggleDrawer(true)}>
-          <div
-            tabIndex={0}
-            role="button"
-            onClick={this.props.toggleDrawer(false)}
-            onKeyDown={this.props.toggleDrawer(false)}
-          >
-            {sideList}
-          </div>
-        </SwipeableDrawer>
-      </div>
-    );
-  }
+    </SwipeableDrawer>
+  );
 }
-
-export default withStyles(styles)(CollapsibleDrawer);

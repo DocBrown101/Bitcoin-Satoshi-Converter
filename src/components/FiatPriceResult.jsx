@@ -1,10 +1,12 @@
 import React from 'react';
 import NumberFormat from 'react-number-format';
+import {useTranslation} from "react-i18next";
 
 import {Box, Grid, Button, Typography, Tooltip} from '@mui/material';
 import {Cached as CachedIcon} from '@mui/icons-material';
 
 export default function FiatPriceResult(props) {
+  const {t} = useTranslation();
   return (
     <Box display="flex">
       <Box textAlign="center"
@@ -18,9 +20,7 @@ export default function FiatPriceResult(props) {
         mx="auto">
         <Tooltip title={props.api ? props.api : ""} placement="top">
           <Grid container direction="row" alignItems="center">
-            <Typography variant="h6">
-              Aktueller Preis für einen Bitcoin
-            </Typography>
+            <Typography variant="h6">{t("CurrentPrice")}</Typography>
             {props.loadingButton
               ? props.loadingButton
               : <Button color="primary" size="small" disabled><CachedIcon /></Button>
@@ -40,63 +40,45 @@ export default function FiatPriceResult(props) {
 }
 
 const LoadingComponent = () => {
+  const {t} = useTranslation();
   return (
-    <React.Fragment>
-      <Typography variant="h6">
-        <Box fontFamily="Monospace" fontWeight="fontWeightBold">
-          Lade aktuellen Preis ...
-        </Box >
-      </Typography>
-      <Typography variant="h6">
-        <Box fontFamily="Monospace" fontWeight="fontWeightBold">
-          Bitte warten!
-        </Box >
-      </Typography>
-    </React.Fragment>
+    <Typography variant="h6">
+      <Box fontFamily="Monospace" fontWeight="fontWeightBold">{t("LoadingCurrentPrice")}</Box >
+      <Box fontFamily="Monospace" fontWeight="fontWeightBold">{t("PleaseWait")}</Box >
+    </Typography>
   );
 };
 
 const ErrorComponent = (props) => {
+  const {t} = useTranslation();
   return (
-    <React.Fragment>
-      <Typography variant="h6">
-        <Box fontFamily="Monospace" fontWeight="fontWeightBold">
-          Es ist ein Fehler aufgetreten:
-        </Box >
-      </Typography>
-      <Typography color="error" variant="h6">
-        <Box fontFamily="Monospace" fontWeight="fontWeightBold">
-          {props.error}
-        </Box >
-      </Typography>
-    </React.Fragment>
+    <Typography variant="h6">
+      <Box fontFamily="Monospace" fontWeight="fontWeightBold">{t("AnErrorHasOccurred")}</Box >
+      <Box fontFamily="Monospace" fontWeight="fontWeightBold">{props.error}</Box >
+    </Typography>
   );
 };
 
 const PriceComponent = (props) => {
   return (
-    <React.Fragment>
-      <Typography color="secondary" variant="h6">
-        <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit">
-          <NumberFormat value={props.eur}
-            displayType={'text'}
-            decimalScale={2}
-            fixedDecimalScale={true}
-            suffix={' €'}
-            thousandSeparator={'.'}
-            decimalSeparator={','} />
-        </Box >
-      </Typography>
-      <Typography color="secondary" variant="h6">
-        <Box fontFamily="Monospace" fontWeight="fontWeightBold">
-          <NumberFormat value={props.usd}
-            displayType={'text'}
-            decimalScale={2}
-            fixedDecimalScale={true}
-            thousandSeparator={true}
-            suffix={' $'} />
-        </Box >
-      </Typography>
-    </React.Fragment>
+    <Typography color="secondary" variant="h6">
+      <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit">
+        <NumberFormat value={props.eur}
+          displayType={'text'}
+          decimalScale={2}
+          fixedDecimalScale={true}
+          suffix={' €'}
+          thousandSeparator={'.'}
+          decimalSeparator={','} />
+      </Box >
+      <Box fontFamily="Monospace" fontWeight="fontWeightBold">
+        <NumberFormat value={props.usd}
+          displayType={'text'}
+          decimalScale={2}
+          fixedDecimalScale={true}
+          thousandSeparator={true}
+          suffix={' $'} />
+      </Box >
+    </Typography>
   );
 };
