@@ -7,6 +7,8 @@ Easy conversion between BTC, EUR and Satoshi
 
 Multi-arch builds for **linux/amd64** and **linux/arm/v7**
 
+![Preview](https://github.com/DocBrown101/Bitcoin-Satoshi-Converter/blob/main/light_dark.png)
+
 ## Docker Image can be found here:
 
 - https://hub.docker.com/r/docbrown101/bitcoin-satoshi-converter
