@@ -9,6 +9,7 @@ import ConverterStore from "../stores/ConverterStore";
 import FiatPriceResult from './FiatPriceResult';
 
 export default function FiatPriceQuery() {
+  console.log("FiatPriceQuery");
   const fetchResult = useQuery('fetchFiatPrice', fetchFiatPrice(), {refetchOnMount: "always"});
   const setFiatPrice = ConverterStore((state) => state.setFiatPrice);
 
