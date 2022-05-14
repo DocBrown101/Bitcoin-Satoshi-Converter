@@ -41,8 +41,8 @@ export function fetchFiatPrice() {
           response.json().then((data) => {
             const priceObject = {
               ID: 30,
-              EUR: data.result.XXBTZEUR.a[0].replace(".", ","),
-              USD: data.result.XXBTZUSD.a[0],
+              EUR: parseFloat(data.result.XXBTZEUR.a[0]),
+              USD: parseFloat(data.result.XXBTZUSD.a[0]),
               API: "Kraken",
             };
             return priceObject;
