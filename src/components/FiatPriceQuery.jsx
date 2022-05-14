@@ -22,7 +22,7 @@ export default function FiatPriceQuery() {
 
   if (fetchResult.isLoading) return (<FiatPriceResult />);
   else if (fetchResult.error) return (<FiatPriceResult error={fetchResult.error.message} />);
-  else return (<FiatPriceResult eur={fetchResult.data.EUR} usd={fetchResult.data.USD} api={fetchResult.data.API} loadingButton={<RefreshButton />} />);
+  else return (<FiatPriceResult eur={fetchResult.data.EUR} usd={fetchResult.data.USD} api={fetchResult.data.API} id={fetchResult.data.ID} loadingButton={<RefreshButton />} />);
 }
 
 const RefreshButton = () => {

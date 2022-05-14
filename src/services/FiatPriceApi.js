@@ -11,26 +11,42 @@ export function fetchFiatPrice() {
       ).then((response) =>
         response.json().then((data) => {
           const priceObject = {
+            ID: 10,
             EUR: data.EUR,
             USD: data.USD,
-            API: "cryptocompare.com",
+            API: "CryptoCompare",
           };
           return priceObject;
         })
       );
-  } else {
+  } else if (id === 20) {
     return () =>
       fetch(
         "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur,usd"
       ).then((response) =>
         response.json().then((data) => {
           const priceObject = {
+            ID: 20,
             EUR: data.bitcoin.eur,
             USD: data.bitcoin.usd,
-            API: "coingecko.com",
+            API: "CoinGecko",
           };
           return priceObject;
         })
+      );
+  } else {
+    return () =>
+      fetch("https://api.kraken.com/0/public/Ticker?pair=BTCEUR,BTCUSD").then(
+        (response) =>
+          response.json().then((data) => {
+            const priceObject = {
+              ID: 30,
+              EUR: data.result.XXBTZEUR.a[0].replace(".", ","),
+              USD: data.result.XXBTZUSD.a[0],
+              API: "Kraken",
+            };
+            return priceObject;
+          })
       );
   }
 }

@@ -35,7 +35,6 @@ class HeaderToolbar extends Component {
 
   render() {
     const {classes} = this.props;
-    const style_unset = {all: "unset"};
     return (
       <header>
         <Container maxWidth="md">
@@ -48,7 +47,7 @@ class HeaderToolbar extends Component {
               </Tooltip>
 
               <div className={classes.centered}>
-                <NavLink to="/" style={style_unset}>
+                <NavLink to="/" style={{all: "unset"}}>
                   <Typography variant="h4" sx={{fontWeight: 'bold'}}>
                     シ Bitcoin Converter ₿
                   </Typography>
