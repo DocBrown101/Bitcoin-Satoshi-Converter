@@ -34,13 +34,28 @@ export function fetchFiatPrice() {
           return priceObject;
         })
       );
+  } else if (id === 30) {
+    return () =>
+      fetch(
+        "https://api.coinpaprika.com/v1/tickers/btc-bitcoin?quotes=EUR,USD"
+      ).then((response) =>
+        response.json().then((data) => {
+          const priceObject = {
+            ID: 30,
+            EUR: parseFloat(data.quotes.EUR.price),
+            USD: parseFloat(data.quotes.USD.price),
+            API: "coinpaprika",
+          };
+          return priceObject;
+        })
+      );
   } else {
     return () =>
       fetch("https://api.kraken.com/0/public/Ticker?pair=BTCEUR,BTCUSD").then(
         (response) =>
           response.json().then((data) => {
             const priceObject = {
-              ID: 30,
+              ID: 40,
               EUR: parseFloat(data.result.XXBTZEUR.a[0]),
               USD: parseFloat(data.result.XXBTZUSD.a[0]),
               API: "Kraken",

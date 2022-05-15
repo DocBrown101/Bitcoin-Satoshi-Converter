@@ -8,6 +8,7 @@ import {Cached as CachedIcon} from '@mui/icons-material';
 
 import ccLogo from "../assets/cc.webp";
 import coingeckoLogo from "../assets/coingecko.webp";
+import coinpaprika from "../assets/coinpaprika.webp";
 import krakenLogo from "../assets/kraken.webp";
 
 export default function FiatPriceResult(props) {
@@ -66,6 +67,8 @@ const CurrentApiImageComponent = (props) => {
       return (<img src={ccLogo} alt="ccLogo" width="60" height="60" />);
     case 20:
       return (<img src={coingeckoLogo} alt="coingeckoLogo" width="60" height="60" />);
+    case 30:
+      return (<img src={coinpaprika} alt="coingeckoLogo" width="60" height="60" />);
     default:
       return (<img src={krakenLogo} alt="krakenLogo" width="60" height="60" />);
   }

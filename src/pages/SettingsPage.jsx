@@ -6,6 +6,7 @@ import {InputLabel, Paper, Box, Grid, Container, FormControl, Select, MenuItem, 
 import {useLocalStorage} from "../services/LocalStorage";
 import ccLogo from "../assets/cc.webp";
 import coingeckoLogo from "../assets/coingecko.webp";
+import coinpaprika from "../assets/coinpaprika.webp";
 import krakenLogo from "../assets/kraken.webp";
 
 export default function SettingsPage() {
@@ -62,6 +63,12 @@ const SelectComponent = () => {
               <ListItemText sx={{ml: 1}} primary="https://api.coingecko.com/" />
             </MenuItem>
             <MenuItem value={30}>
+              <ListItemIcon sx={{minWidth: 34}}>
+                <img src={coinpaprika} alt="coinpaprika" width="30" height="30" />
+              </ListItemIcon>
+              <ListItemText sx={{ml: 1}} primary="https://api.coinpaprika.com/" />
+            </MenuItem>
+            <MenuItem value={40}>
               <ListItemIcon sx={{minWidth: 34}}>
                 <img src={krakenLogo} alt="krakenLogo" width="30" height="30" />
               </ListItemIcon>

@@ -53,5 +53,7 @@ Your app is ready to be deployed!
 
 ### Fiat Price APIs
 
-- https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur
-- https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=EUR
+- https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=EUR,USD
+- https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur,usd
+- https://api.coinpaprika.com/v1/tickers/btc-bitcoin?quotes=EUR,USD
+- https://api.kraken.com/0/public/Ticker?pair=BTCEUR,BTCUSD
