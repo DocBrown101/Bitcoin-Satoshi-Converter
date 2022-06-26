@@ -6,6 +6,10 @@ Easy conversion between BTC, EUR and Satoshi
 [![Docker_pulls](https://img.shields.io/docker/pulls/docbrown101/bitcoin-satoshi-converter)](https://hub.docker.com/r/docbrown101/bitcoin-satoshi-converter)
 [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/docbrown101/bitcoin-satoshi-converter)](https://hub.docker.com/r/docbrown101/bitcoin-satoshi-converter)
 
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DocBrown101_Bitcoin-Satoshi-Converter&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=DocBrown101_Bitcoin-Satoshi-Converter)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=DocBrown101_Bitcoin-Satoshi-Converter&metric=ncloc)](https://sonarcloud.io/dashboard?id=DocBrown101_Bitcoin-Satoshi-Converter)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=DocBrown101_Bitcoin-Satoshi-Converter&metric=security_rating)](https://sonarcloud.io/dashboard?id=DocBrown101_Bitcoin-Satoshi-Converter)
+
 Multi-arch builds for **linux/amd64** and **linux/arm/v7**
 
 ![Preview](https://github.com/DocBrown101/Bitcoin-Satoshi-Converter/blob/main/light_dark.png)
