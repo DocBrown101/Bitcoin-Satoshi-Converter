@@ -49,6 +49,7 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 > By using React version 18, a small workaround is needed to install all dependencies.
+
 > npm install --legacy-peer-deps
 
 ### `npm run build`
