@@ -33,33 +33,54 @@ export default function FiatPriceResult(props) {
         </Grid>
 
         {props.eur && props.usd
-          ?
-          <Grid container direction="row" justify="center" alignItems="center">
-            <Grid item xs>
-              <Grid container justifyContent="flex-end" style={{height: "100%"}}>
-                <Tooltip title={props.api ? props.api : ""} placement="bottom">
-                  <NavLink to="/settings" style={{height: "60px"}}>
-                    <CurrentApiImageComponent id={props.id} />
-                  </NavLink>
-                </Tooltip>
-              </Grid>
-            </Grid>
-            <Grid item xs={6}>
-              <PriceComponent eur={props.eur} usd={props.usd} />
-            </Grid>
-            <Grid item xs>
-              <div />
-            </Grid>
-          </Grid>
-          : (props.error
-            ? <ErrorComponent error={props.error} />
-            : <LoadingComponent />
-          )
+          ? <ResultComponent id={props.id} api={props.api} eur={props.eur} usd={props.usd} />
+          : <ErrorOrLoadingComponent error={props.error} />
         }
       </Box>
     </Box >
   );
 }
+
+const ResultComponent = (props) => {
+  return (
+    <Grid container direction="row" justify="center" alignItems="center">
+      <Grid item xs>
+        <Grid container justifyContent="flex-end" style={{height: "100%"}}>
+          <Tooltip title={props.api ? props.api : ""} placement="bottom">
+            <NavLink to="/settings" style={{height: "60px"}}>
+              <CurrentApiImageComponent id={props.id} />
+            </NavLink>
+          </Tooltip>
+        </Grid>
+      </Grid>
+      <Grid item xs={6}>
+        <PriceComponent eur={props.eur} usd={props.usd} />
+      </Grid>
+      <Grid item xs>
+        <div />
+      </Grid>
+    </Grid>
+  );
+};
+
+const ErrorOrLoadingComponent = (props) => {
+  const {t} = useTranslation();
+  if (props.error) {
+    return (
+      <Typography variant="h6">
+        <Box fontFamily="Monospace" fontWeight="fontWeightBold">{t("AnErrorHasOccurred")}</Box >
+        <Box fontFamily="Monospace" fontWeight="fontWeightBold">{props.error}</Box >
+      </Typography>
+    );
+  }
+
+  return (
+    <Typography variant="h6">
+      <Box fontFamily="Monospace" fontWeight="fontWeightBold">{t("LoadingCurrentPrice")}</Box >
+      <Box fontFamily="Monospace" fontWeight="fontWeightBold">{t("PleaseWait")}</Box >
+    </Typography>
+  );
+};
 
 const CurrentApiImageComponent = (props) => {
   switch (props.id) {
@@ -72,26 +93,6 @@ const CurrentApiImageComponent = (props) => {
     default:
       return (<img src={krakenLogo} alt="krakenLogo" width="60" height="60" />);
   }
-};
-
-const LoadingComponent = () => {
-  const {t} = useTranslation();
-  return (
-    <Typography variant="h6">
-      <Box fontFamily="Monospace" fontWeight="fontWeightBold">{t("LoadingCurrentPrice")}</Box >
-      <Box fontFamily="Monospace" fontWeight="fontWeightBold">{t("PleaseWait")}</Box >
-    </Typography>
-  );
-};
-
-const ErrorComponent = (props) => {
-  const {t} = useTranslation();
-  return (
-    <Typography variant="h6">
-      <Box fontFamily="Monospace" fontWeight="fontWeightBold">{t("AnErrorHasOccurred")}</Box >
-      <Box fontFamily="Monospace" fontWeight="fontWeightBold">{props.error}</Box >
-    </Typography>
-  );
 };
 
 const PriceComponent = (props) => {
