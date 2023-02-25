@@ -45,9 +45,9 @@ const ResultComponent = (props) => {
   return (
     <Grid container direction="row" justify="center" alignItems="center">
       <Grid item xs>
-        <Grid container justifyContent="flex-end" style={{height: "100%"}}>
+        <Grid container justifyContent="flex-end" sx={{height: "60px"}}>
           <Tooltip title={props.api ? props.api : ""} placement="bottom">
-            <NavLink to="/settings" style={{height: "60px"}}>
+            <NavLink to="/settings">
               <CurrentApiImageComponent id={props.id} />
             </NavLink>
           </Tooltip>

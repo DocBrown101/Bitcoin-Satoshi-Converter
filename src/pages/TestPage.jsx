@@ -8,7 +8,8 @@ export default function TestPage() {
   return (
     <React.Fragment>
       <ButtonComponent />
-      <GridComponent />
+      <Grid1Component />
+      <Grid2Component />
     </React.Fragment>
   );
 }
@@ -16,6 +17,7 @@ export default function TestPage() {
 const ButtonComponent = () => {
   return (
     <Container maxWidth="sm">
+      <Typography variant="h6">Buttons</Typography>
       <Paper>
         <Box sx={{m: 1}} textAlign="center">
           <Button sx={{m: 1}} color="primary">primary</Button>
@@ -36,9 +38,10 @@ const ButtonComponent = () => {
   );
 };
 
-const GridComponent = () => {
+const Grid1Component = () => {
   return (
     <Container maxWidth="sm">
+      <Typography variant="h6">Grid-1</Typography>
       <Grid container direction="row" justify="center" alignItems="stretch">
         {/* ROW 1 */}
         <Grid item xs={12}>
@@ -48,7 +51,7 @@ const GridComponent = () => {
         </Grid>
         {/* ROW 2 */}
         <Grid item xs={3}>
-          <Grid container alignItems="center" justifyContent="center" style={{height: "100%"}}>
+          <Grid container alignItems="center" justifyContent="center" sx={{height: "100%"}}>
             <img src={krakenLogo} alt="krakenLogo" width="60" height="60" />
           </Grid>
         </Grid>
@@ -68,5 +71,36 @@ const GridComponent = () => {
         </Grid>
       </Grid>
     </Container>
+  );
+};
+
+const Grid2Component = () => {
+  return (
+    <Container maxWidth="sm">
+      <Typography variant="h6">Grid-2</Typography>
+      <Grid container justifyContent="center" item xs={12} spacing={0}>
+        <GridRowComponent>
+          <Typography variant="h4" align='center'>1</Typography>
+        </GridRowComponent>
+        <GridRowComponent>
+          <Typography variant="h4" align='center'>2</Typography>
+        </GridRowComponent>
+        <GridRowComponent>
+          <Typography variant="h4" align='center'>3</Typography>
+        </GridRowComponent>
+      </Grid>
+    </Container>
+  );
+};
+
+const GridRowComponent = (props) => {
+  return (
+    <React.Fragment>
+      <Grid item xs={2} sm={3} md={4} />
+      <Grid item xs={8} sm={6} md={4} sx={{maxWidth: "300px"}}>
+        {props.children}
+      </Grid>
+      <Grid item xs={2} sm={3} md={4} />
+    </React.Fragment>
   );
 };

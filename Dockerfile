@@ -2,13 +2,12 @@
 FROM node:lts-buster as build
 WORKDIR /app
 COPY package*.json ./
-#RUN npm ci
-RUN npm ci --legacy-peer-deps
+RUN npm ci
 COPY . ./
 RUN npm run build
 
 # production
-FROM nginx:1.21.4-alpine
+FROM nginx:1.23.3-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
