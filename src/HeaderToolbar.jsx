@@ -24,7 +24,7 @@ class HeaderToolbar extends Component {
     return (
       <header>
         <Container maxWidth="md">
-          <Toolbar sx={{justifyContent: 'space-between', p: 3, borderRadius: 1, mt: 3, maxWidth: "md", color: "primary.contrastText", bgcolor: "primary.main"}}>
+          <Toolbar sx={{justifyContent: 'space-between', cursor: "default", p: 3, borderRadius: 1, mt: 3, maxWidth: "md", color: "primary.contrastText", bgcolor: "primary.main"}}>
             <Tooltip title="Menu">
               <IconButton color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
                 <MenuIcon />
