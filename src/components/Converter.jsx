@@ -8,7 +8,7 @@ import ConverterStore from "../stores/ConverterStore";
 import InputElement from './InputElement';
 
 export default function Converter() {
-  const fiatPrice = ConverterStore((state) => state.fiatPrice);
+  const eurFiatPrice = ConverterStore((state) => state.eurFiatPrice);
   const oneFiatSats = ConverterStore((state) => state.oneFiatSats);
   const convertedEuro = ConverterStore((state) => state.convertedEuro);
   const convertedBitcoin = ConverterStore((state) => state.convertedBitcoin);
@@ -41,9 +41,9 @@ export default function Converter() {
             <Typography variant="h6">{t("EnterAmount")}</Typography>
           </Box>
           <Grid container justifyContent="center" item xs={12} spacing={0}>
-            <InputElement label="€ Euro" endLabel="EUR" value={convertedEuro} disabled={fiatPrice <= 0 ? true : false} onInputChange={onEuroInputChange} />
-            <InputElement label="฿ Bitcoin" endLabel="BTC" value={convertedBitcoin} disabled={fiatPrice <= 0 ? true : false} onInputChange={onBitcoinInputChange} />
-            <InputElement label="シ Satoshi" endLabel="sat" value={convertedSatoshi} disabled={fiatPrice <= 0 ? true : false} onInputChange={onSatoshiInputChange} />
+            <InputElement label="€ Euro" endLabel="EUR" value={convertedEuro} disabled={eurFiatPrice <= 0 ? true : false} onInputChange={onEuroInputChange} />
+            <InputElement label="฿ Bitcoin" endLabel="BTC" value={convertedBitcoin} disabled={eurFiatPrice <= 0 ? true : false} onInputChange={onBitcoinInputChange} />
+            <InputElement label="シ Satoshi" endLabel="sat" value={convertedSatoshi} disabled={eurFiatPrice <= 0 ? true : false} onInputChange={onSatoshiInputChange} />
           </Grid>
         </Box>
       </Paper >

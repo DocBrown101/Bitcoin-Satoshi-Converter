@@ -11,14 +11,14 @@ import FiatPriceResult from './FiatPriceResult';
 export default function FiatPriceQuery() {
   console.log("FiatPriceQuery");
   const fetchResult = useQuery('fetchFiatPrice', fetchFiatPrice(), {refetchOnMount: "always"});
-  const setFiatPrice = ConverterStore((state) => state.setFiatPrice);
+  const setEurFiatPrice = ConverterStore((state) => state.setEurFiatPrice);
 
   // React.useEffect is required, otherwise results in a console error
   React.useEffect(() => {
-    if (fetchResult && fetchResult.data && fetchResult.data.EUR) {
-      setFiatPrice(fetchResult.data.EUR);
+    if (fetchResult && fetchResult.data && fetchResult.data.EUR && fetchResult.data.USD) {
+      setEurFiatPrice(fetchResult.data.EUR);
     }
-  }, [fetchResult, setFiatPrice]);
+  }, [fetchResult, setEurFiatPrice]);
 
   if (fetchResult.isLoading) return (<FiatPriceResult />);
   else if (fetchResult.error) return (<FiatPriceResult error={fetchResult.error.message} />);
