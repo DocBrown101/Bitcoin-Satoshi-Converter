@@ -81,7 +81,7 @@ export default function Converter() {
 const GridRowComponent = ({input, button}) => (
   <React.Fragment>
     <Grid item xs={2} sm={3} md={4} />
-    <Grid item xs={8} sm={6} md={4} sx={{maxWidth: "300px"}}>
+    <Grid item xs={8} sm={6} md={4} sx={{maxWidth: "300px", mb: 2}}>
       {input}
     </Grid>
     <Grid item xs={2} sm={3} md={4}>

@@ -5,8 +5,8 @@ import {Container, Tab} from '@mui/material';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
 
 import Converter from "../components/Converter";
+import Simulation from "../components/Simulation";
 import FiatPriceQuery from "../components/FiatPriceQuery";
-import FiatPriceSimulation from "../components/FiatPriceSimulation";
 
 export default function HomePage() {
   const [tabValue, setTabValue] = React.useState("1");
@@ -28,7 +28,7 @@ export default function HomePage() {
           <FiatPriceQuery />
         </TabPanel>
         <TabPanel value="2" sx={{padding: '0px'}}>
-          <FiatPriceSimulation />
+          <Simulation />
         </TabPanel>
       </TabContext>
     </Container>
