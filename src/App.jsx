@@ -14,7 +14,7 @@ import TestPage from "./pages/TestPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
-import HeaderToolbar from "./HeaderToolbar";
+import HeaderToolbar from "./components/HeaderToolbar";
 import {useLocalStorage} from './services/LocalStorage';
 
 const queryClient = new QueryClient({
