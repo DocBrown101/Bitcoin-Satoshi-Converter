@@ -20,8 +20,8 @@ import {useLocalStorage} from './services/LocalStorage';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: 5 * 60 * 1000,
-      staleTime: 5 * 60 * 1000,
+      cacheTime: 1 * 60 * 1000,
+      staleTime: 1 * 60 * 1000,
     },
   },
 });
