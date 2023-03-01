@@ -17,7 +17,7 @@ const useStore = create((set) => ({
     const { value } = values;
     set((state) => ({ convertedBitcoin: parseFloat((value / state.eurFiatPrice).toFixed(8)) }));
     set((state) => ({ convertedSatoshi: ((value / state.eurFiatPrice) * 100000000).toFixed(0) }));
-    set(() => ({ convertedEuro: undefined }));
+    set(() => ({ convertedEuro: value }));
   },
   onBitcoinInputChange: (values, sourceInfo) => {
     if (sourceInfo.source === 'prop') {
@@ -26,7 +26,7 @@ const useStore = create((set) => ({
     const { value } = values;
     set(() => ({ convertedSatoshi: (value * 100000000).toFixed(0) }));
     set((state) => ({ convertedEuro: (value * state.eurFiatPrice).toFixed(2) }));
-    set(() => ({ convertedBitcoin: undefined }));
+    set(() => ({ convertedBitcoin: value }));
   },
   onSatoshiInputChange: (values, sourceInfo) => {
     if (sourceInfo.source === 'prop') {
@@ -35,7 +35,7 @@ const useStore = create((set) => ({
     const { value } = values;
     set(() => ({ convertedBitcoin: parseFloat((value / 100000000).toFixed(8)) }));
     set((state) => ({ convertedEuro: ((value * state.eurFiatPrice) / 100000000).toFixed(2) }));
-    set(() => ({ convertedSatoshi: undefined }));
+    set(() => ({ convertedSatoshi: value }));
   },
 }));
 
