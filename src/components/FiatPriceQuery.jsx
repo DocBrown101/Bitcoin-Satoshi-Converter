@@ -20,9 +20,14 @@ export default function FiatPriceQuery() {
     }
   }, [fetchResult, setEurFiatPrice]);
 
-  if (fetchResult.isLoading) return (<FiatPriceResult />);
-  else if (fetchResult.error) return (<FiatPriceResult error={fetchResult.error.message} />);
-  else return (<FiatPriceResult eur={fetchResult.data.EUR} usd={fetchResult.data.USD} api={fetchResult.data.API} id={fetchResult.data.ID} loadingButton={<RefreshButton />} />);
+  switch (fetchResult.status) {
+    case "loading":
+      return (<FiatPriceResult />);
+    case "error":
+      return (<FiatPriceResult error={fetchResult.error.message} />);
+    default:
+      return (<FiatPriceResult eur={fetchResult.data.EUR} usd={fetchResult.data.USD} api={fetchResult.data.API} id={fetchResult.data.ID} loadingButton={<RefreshButton />} />);
+  }
 }
 
 const RefreshButton = () => {
