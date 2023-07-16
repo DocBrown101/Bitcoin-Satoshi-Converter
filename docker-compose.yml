@@ -1,0 +1,25 @@
+version: '2.4'
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: btc-converter
+    ports:
+      - 127.0.0.1:9876:80
+    restart: on-failure:1
+    user: 1000:1000
+    security_opt:
+      - apparmor:docker-default
+      - no-new-privileges
+    cpu_shares: 10
+    pids_limit: 10
+    mem_limit: 100m
+    read_only: true
+    volumes:
+      # Use the same time zone as the host machine.
+      - /etc/localtime:/etc/localtime:ro
+    tmpfs:
+      - /var/run:mode=770,size=512K,uid=1000,gid=1000
+      - /var/cache/nginx:mode=770,size=512K,uid=1000,gid=1000

@@ -4,6 +4,7 @@ import {useTranslation} from "react-i18next";
 
 import {Box, Grid, Paper, Typography, IconButton} from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 
 import ConverterStore from "../stores/ConverterStore";
 import InputElement from './InputElement';
@@ -17,6 +18,7 @@ export default function Converter() {
   const onEuroInputChange = ConverterStore((state) => state.onEuroInputChange);
   const onBitcoinInputChange = ConverterStore((state) => state.onBitcoinInputChange);
   const onSatoshiInputChange = ConverterStore((state) => state.onSatoshiInputChange);
+  const resetConvertedState = ConverterStore((state) => state.resetConvertedState);
   const {t} = useTranslation();
   const copyToClipboard = (text) => {
     if ('clipboard' in navigator) {
@@ -50,6 +52,11 @@ export default function Converter() {
             <GridRowComponent
               input={
                 <InputElement label="€ Euro" endLabel="EUR" value={convertedEuro} disabled={eurFiatPrice <= 0 ? true : false} onInputChange={onEuroInputChange} />
+              }
+              button={
+                <IconButton sx={{mt: 1, ml: 1}} aria-label="Copy" onClick={() => resetConvertedState()}>
+                  <BackspaceOutlinedIcon />
+                </IconButton>
               } />
 
             <GridRowComponent
