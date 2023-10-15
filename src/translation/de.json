@@ -5,6 +5,13 @@
   "language": "Sprache",
   "settings": "Einstellungen",
   "ApiLabel": "Verwendete Preis-API",
+  "TimeZone": "Europe/Berlin",
+  "Locales": "de-DE",
+  "MissingBlocks": " fehlende Blöcke",
+  "HighPriority": "Hohe Priorität",
+  "MediumPriority": "Mittlere Priorität",
+  "NoPriority": "Keine Priorität",
+  "CurrentTransactionFees": "Aktuelle Transaktionsgebühren",
   "CurrentPrice": "Aktueller Preis für einen Bitcoin",
   "LoadingCurrentPrice": "Lade aktuellen Preis ...",
   "PleaseWait": "Bitte warten!",
@@ -14,5 +21,5 @@
   "footer": {
     "line1": "1 Bitcoin kann 100 Millionen Mal geteilt werden!",
     "line2": "Daraufhin erhält man einen Satoshi."
-  }  
+  }
 }

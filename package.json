@@ -5,20 +5,20 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.13.7",
-    "@mui/lab": "^5.0.0-alpha.120",
-    "@mui/material": "^5.13.7",
-    "@mui/system": "^5.13.7",
-    "i18next": "^23.2.11",
+    "@mui/icons-material": "^5.14.12",
+    "@mui/lab": "^5.0.0-alpha.147",
+    "@mui/material": "^5.14.12",
+    "@mui/system": "^5.14.12",
+    "i18next": "^23.5.1",
     "i18next-browser-languagedetector": "^7.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-i18next": "^13.0.2",
+    "react-i18next": "^13.2.2",
     "react-number-format": "^4.9.4",
     "react-query": "^3.39.3",
-    "react-router-dom": "^6.14.1",
+    "react-router-dom": "^6.16.0",
     "react-scripts": "^5.0.1",
-    "zustand": "^4.3.9"
+    "zustand": "^4.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
