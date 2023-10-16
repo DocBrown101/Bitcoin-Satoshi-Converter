@@ -62,3 +62,7 @@ Your app is ready to be deployed!
 - https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur,usd
 - https://api.coinpaprika.com/v1/tickers/btc-bitcoin?quotes=EUR,USD
 - https://api.kraken.com/0/public/Ticker?pair=BTCEUR,BTCUSD
+
+#### Default mempool websocket connection
+
+- wss://mempool.space/api/v1/ws
