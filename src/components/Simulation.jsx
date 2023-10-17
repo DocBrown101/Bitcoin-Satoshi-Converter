@@ -1,5 +1,5 @@
 import React from 'react';
-import NumberFormat from "react-number-format";
+import {NumericFormat} from 'react-number-format';
 import {useTranslation} from "react-i18next";
 
 import {Box, Paper, Grid, Typography, Slider, Input, Container} from '@mui/material';
@@ -37,7 +37,7 @@ export default function FiatPriceSimulation() {
             <Typography variant="h6">{t("PriceSimulation")}</Typography>
             <Typography color="secondary" variant="h6">
               <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" mb={2}>
-                <NumberFormat value={oneFiatSats}
+                <NumericFormat value={oneFiatSats}
                   displayType={'text'}
                   decimalScale={0}
                   fixedDecimalScale={true}
@@ -84,7 +84,7 @@ export default function FiatPriceSimulation() {
             <InputElement label="€ Euro" endLabel="EUR" value={fiatPrice} onInputChange={onFiatPriceChange} />
             <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" sx={{mx: 2, p: 1}}>
               <Typography color="secondary" variant="h6">
-                <NumberFormat
+                <NumericFormat
                   value={sats}
                   displayType={'text'}
                   decimalScale={0}

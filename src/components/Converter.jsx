@@ -1,12 +1,12 @@
 import React from 'react';
-import NumberFormat from "react-number-format";
-import {useTranslation} from "react-i18next";
+import {NumericFormat} from 'react-number-format';
+import {useTranslation} from 'react-i18next';
 
 import {Box, Grid, Paper, Typography, IconButton} from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 
-import ConverterStore from "../stores/ConverterStore";
+import ConverterStore from '../stores/ConverterStore';
 import InputElement from './InputElement';
 
 export default function Converter() {
@@ -33,7 +33,7 @@ export default function Converter() {
             <Typography color="secondary" variant="h6">
               {oneFiatSats > 0 ?
                 <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" mb={2}>
-                  <NumberFormat value={oneFiatSats}
+                  <NumericFormat value={oneFiatSats}
                     displayType={'text'}
                     decimalScale={0}
                     fixedDecimalScale={true}

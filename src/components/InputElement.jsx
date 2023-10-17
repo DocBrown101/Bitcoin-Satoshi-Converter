@@ -1,12 +1,12 @@
 import React from 'react';
-import NumberFormat from "react-number-format";
+import {NumericFormat} from 'react-number-format';
 
 import {InputAdornment, TextField} from '@mui/material';
 import {Input as InputIcon} from '@mui/icons-material';
 
 export default function InputElement(props) {
   return (
-    <NumberFormat
+    <NumericFormat
       id={props.label}
       label={props.label}
       value={props.value}
@@ -38,7 +38,7 @@ export default function InputElement(props) {
       }}
       thousandSeparator="."
       decimalSeparator=","
-      isNumericString
+      valueIsNumericString
       isAllowed={(values) => {
         const {floatValue} = values;
         return floatValue >= 0;

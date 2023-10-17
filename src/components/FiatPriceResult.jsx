@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import NumberFormat from 'react-number-format';
+import {NumericFormat} from 'react-number-format';
 import {useTranslation} from "react-i18next";
 
 import {Box, Grid, Button, Typography, Tooltip} from '@mui/material';
@@ -99,7 +99,7 @@ const PriceComponent = (props) => {
   return (
     <Typography color="secondary" variant="h6">
       <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit">
-        <NumberFormat value={props.eur}
+        <NumericFormat value={props.eur}
           displayType={'text'}
           decimalScale={2}
           fixedDecimalScale={true}
@@ -108,7 +108,7 @@ const PriceComponent = (props) => {
           decimalSeparator={','} />
       </Box >
       <Box fontFamily="Monospace" fontWeight="fontWeightBold">
-        <NumberFormat value={props.usd}
+        <NumericFormat value={props.usd}
           displayType={'text'}
           decimalScale={2}
           fixedDecimalScale={true}

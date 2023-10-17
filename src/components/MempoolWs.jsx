@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import NumberFormat from "react-number-format";
+import {NumericFormat} from 'react-number-format';
 import {useTranslation} from "react-i18next";
 
 import {Box, Typography, Container, Paper, Grid} from '@mui/material';
@@ -136,7 +136,7 @@ const HalvingComponent = React.memo((props) => {
         <Paper>
           <Box fontFamily="Monospace" fontWeight="fontWeightBold" textAlign="center" p={2}>
             <Typography color="secondary" variant="h6">
-              <NumberFormat value={halvingData.blocksToNextHalving}
+              <NumericFormat value={halvingData.blocksToNextHalving}
                 displayType={'text'}
                 decimalScale={0}
                 fixedDecimalScale={true}

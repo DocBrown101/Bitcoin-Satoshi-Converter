@@ -4,7 +4,8 @@ import {QueryClient, QueryClientProvider} from 'react-query';
 import {ReactQueryDevtools} from "react-query/devtools";
 import {useTranslation} from "react-i18next";
 
-import {CssBaseline, Container, Box, Paper, Typography} from '@mui/material';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import {CssBaseline, Container, Box, Paper, Typography, IconButton, Tooltip} from '@mui/material';
 import {ThemeProvider, createTheme} from '@mui/material/styles';
 
 import "./translation/i18n";
@@ -25,6 +26,10 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+const openInNewTab = (url) => {
+  window.open(url, "_blank", "noreferrer");
+};
 
 export default function App() {
   const [isDarkTheme, setIsDarkTheme] = useLocalStorage("isDarkTheme", false);
@@ -62,6 +67,13 @@ const FooterComponent = () => {
             <Typography variant="body1" color="inherit">{t("footer.line2")}</Typography>
           </Box>
         </Paper>
+        <Box textAlign="center">
+          <Tooltip title="GitHub">
+            <IconButton color="inherit" aria-label="Theme" role="link" onClick={() => openInNewTab("https://github.com/DocBrown101/Bitcoin-Satoshi-Converter")}>
+              <GitHubIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
       </Container>
     </footer>
   );
