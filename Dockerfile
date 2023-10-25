@@ -9,7 +9,7 @@ COPY ./src ./src
 RUN npm run build
 
 # production
-FROM nginx:1.23.4-alpine
+FROM nginx:1.25.2-alpine
 RUN addgroup -S nonroot && adduser -S nonroot -G nonroot
 USER nonroot
 COPY --from=build /app/build /usr/share/nginx/html

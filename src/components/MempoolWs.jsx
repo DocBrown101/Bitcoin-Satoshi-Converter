@@ -2,7 +2,8 @@ import React, {useEffect, useState} from "react";
 import {NumericFormat} from 'react-number-format';
 import {useTranslation} from "react-i18next";
 
-import {Box, Typography, Container, Paper, Grid} from '@mui/material';
+import {Accordion, AccordionSummary, AccordionDetails, Box, Typography, Container, Paper, Grid} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {styled} from '@mui/material/styles';
 
 import ConverterStore from "../stores/ConverterStore";
@@ -96,8 +97,10 @@ export default function MempoolWsComponent({...props}) {
     };
   }, []);
 
+  const {t} = useTranslation();
+
   if (!webSocketReady) {
-    return <PlaceholderComponent text="Please wait ..." />;
+    return <PlaceholderComponent text={t("PleaseWait")} />;
   } else if (!lastFeeData || !lastBlockData) {
     return <PlaceholderComponent text="Waiting for message from server ..." />;
   } else {
@@ -132,7 +135,16 @@ const HalvingComponent = React.memo((props) => {
   return (
     <Box mb={2}>
       <Container maxWidth="sm">
-        <Typography variant="h6">Bitcoin Halving Event</Typography>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography variant="h6">Bitcoin Halving Event</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography paragraph={true}>{t("HalvingText.line1")}</Typography>
+            <Typography paragraph={true}>{t("HalvingText.line2")}</Typography>
+            <Typography>{t("HalvingText.line3")}</Typography>
+          </AccordionDetails>
+        </Accordion>
         <Paper>
           <Box fontFamily="Monospace" fontWeight="fontWeightBold" textAlign="center" p={2}>
             <Typography color="secondary" variant="h6">

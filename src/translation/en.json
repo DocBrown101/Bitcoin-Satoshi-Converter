@@ -14,10 +14,15 @@
   "CurrentTransactionFees": "Current transaction fees",
   "CurrentPrice": "Current price for one bitcoin",
   "LoadingCurrentPrice": "Loading current price ...",
-  "PleaseWait": "Please wait!",
+  "PleaseWait": "Please wait ...",
   "AnErrorHasOccurred": "An error has occurred:",
   "PriceSimulation": "Price Simulation for ONE Bitcoin",
   "PageNotFound": "Page not found!",
+  "HalvingText": {
+    "line1": "The Bitcoin Halving is a predetermined event where the rewards that miners (individuals who verify Bitcoin transactions and create new Bitcoins) receive for their work are cut in half. These rewards consist of newly generated Bitcoins, and the halving reduces the quantity of these new Bitcoins by half.",
+    "line2": "Essentially, this means that if, for example, 12.5 Bitcoins were awarded to miners every 10 minutes before a halving, this would be reduced to 6.25 Bitcoins after the halving. This happens every four years to ensure that the total number of Bitcoins that can ever be created is capped at 21 million.",
+    "line3": "The halving has implications for the Bitcoin ecosystem as it significantly reduces the supply of new Bitcoins. Historically, it has often been associated with price increases because it limits the supply while demand either remains steady or increases. So, it's an important part of the Bitcoin economy that beginners should understand."
+  },
   "footer": {
     "line1": "1 Bitcoin can be shared 100 million times!",
     "line2": "You will then receive one Satoshi."
