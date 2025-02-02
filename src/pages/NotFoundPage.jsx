@@ -1,7 +1,8 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
 
-import {Grid, Paper, Typography} from '@mui/material';
+import {Paper, Typography} from '@mui/material';
+import Grid from '@mui/material/Grid2';
 
 export default function NotFoundPage() {
   const {t} = useTranslation();

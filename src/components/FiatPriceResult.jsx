@@ -3,7 +3,8 @@ import {NavLink} from 'react-router-dom';
 import {NumericFormat} from 'react-number-format';
 import {useTranslation} from "react-i18next";
 
-import {Box, Grid, Button, Typography, Tooltip} from '@mui/material';
+import {Box, Button, Typography, Tooltip} from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import {Cached as CachedIcon} from '@mui/icons-material';
 
 import ccLogo from "../assets/cc.webp";
@@ -43,9 +44,10 @@ export default function FiatPriceResult(props) {
 
 const ResultComponent = (props) => {
   return (
-    <Grid container direction="row" justify="center" alignItems="center">
-      <Grid item xs>
-        <Grid container justifyContent="flex-end" sx={{height: "60px"}}>
+    <Grid container spacing={1} columns={16}>
+      <Grid size={4}>
+        {/* https://mui.com/material-ui/react-grid2/#interactive */}
+        <Grid container direction="row" sx={{ height: "60px", justifyContent: "flex-end", alignItems: "center" }}>
           <Tooltip title={props.api ? props.api : ""} placement="bottom">
             <NavLink to="/settings">
               <CurrentApiImageComponent id={props.id} />
@@ -53,10 +55,10 @@ const ResultComponent = (props) => {
           </Tooltip>
         </Grid>
       </Grid>
-      <Grid item xs={6}>
+      <Grid size={8}>
         <PriceComponent eur={props.eur} usd={props.usd} />
       </Grid>
-      <Grid item xs>
+      <Grid size={4}>
         <div />
       </Grid>
     </Grid>

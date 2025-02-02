@@ -2,7 +2,8 @@ import React, {useEffect, useState} from "react";
 import {NumericFormat} from 'react-number-format';
 import {useTranslation} from "react-i18next";
 
-import {Accordion, AccordionSummary, AccordionDetails, Box, Typography, Container, Paper, Grid} from '@mui/material';
+import {Accordion, AccordionSummary, AccordionDetails, Box, Typography, Container, Paper} from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {styled} from '@mui/material/styles';
 

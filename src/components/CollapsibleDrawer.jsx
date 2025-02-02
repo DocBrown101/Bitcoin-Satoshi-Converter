@@ -2,24 +2,24 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {useTranslation} from "react-i18next";
 
-import {SwipeableDrawer, List, Divider, ListItem, ListItemIcon, ListItemText} from '@mui/material';
+import {SwipeableDrawer, List, Divider, ListItemIcon, ListItemText, ListItemButton} from '@mui/material';
 import {Home as HomeIcon, Settings} from '@mui/icons-material';
 
 export default function CollapsibleDrawer(props) {
   const {t} = useTranslation();
   const drawerList = (
     <List sx={{width: 200, p: 0}}>
-      <ListItem sx={{minHeight: 100}} button component={Link} to="/">
+      <ListItemButton sx={{minHeight: 100}} component={Link} to="/">
         <ListItemIcon><HomeIcon /></ListItemIcon>
         <ListItemText primary={t("converter")} />
-      </ListItem>
+      </ListItemButton>
 
       <Divider />
 
-      <ListItem button component={Link} to="/settings">
+      <ListItemButton component={Link} to="/settings">
         <ListItemIcon><Settings /></ListItemIcon>
         <ListItemText primary={t("settings")} />
-      </ListItem>
+      </ListItemButton>
     </List>
   );
 

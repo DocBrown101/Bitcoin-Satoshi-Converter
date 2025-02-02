@@ -1,6 +1,7 @@
 import React from 'react';
 
-import {Paper, Box, Button, Container, Grid, Typography} from '@mui/material';
+import {Paper, Box, Button, Container, Typography} from '@mui/material';
+import Grid from '@mui/material/Grid2';
 
 import krakenLogo from "../assets/kraken.webp";
 
