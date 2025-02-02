@@ -3,7 +3,7 @@ FROM node:lts AS build
 WORKDIR /app
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm install --silent --ignore-scripts
+RUN npm install --legacy-peer-deps --silent --ignore-scripts
 COPY ./public ./public
 COPY ./src ./src
 RUN npm run build
