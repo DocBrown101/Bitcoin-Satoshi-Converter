@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import {NumericFormat} from 'react-number-format';
 import {useTranslation} from "react-i18next";
 
-import {Accordion, AccordionSummary, AccordionDetails, Box, Typography, Container, Paper} from '@mui/material';
-import Grid from '@mui/material/Grid2';
+import {Grid, Accordion, AccordionSummary, AccordionDetails, Box, Typography, Container, Paper} from '@mui/material';
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {styled} from '@mui/material/styles';
 
@@ -179,24 +179,24 @@ const CurrentFeesComponent = React.memo((props) => {
         <Paper>
           <Box fontFamily="Monospace" fontWeight="fontWeightBold" p={2}>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid size={6}>
                 <Item>{t("HighPriority")}</Item>
               </Grid>
-              <Grid item xs={6}>
+              <Grid size={6}>
                 <Item>{props.feeData.fastestFee} sat/vB = {fastest.replace(".", ",")} €</Item>
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid size={6}>
                 <Item>{t("MediumPriority")}</Item>
               </Grid>
-              <Grid item xs={6}>
+              <Grid size={6}>
                 <Item>{props.feeData.hourFee} sat/vB = {medium.replace(".", ",")} €</Item>
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid size={6}>
                 <Item>{t("NoPriority")}</Item>
               </Grid>
-              <Grid item xs={6}>
+              <Grid size={6}>
                 <Item>{props.feeData.minimumFee} sat/vB = {minimum.replace(".", ",")} €</Item>
               </Grid>
             </Grid>

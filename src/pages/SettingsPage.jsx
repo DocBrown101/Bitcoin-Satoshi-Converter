@@ -1,8 +1,5 @@
-import React from "react";
+import {Grid, InputLabel, Paper, Box, Container, FormControl, Select, MenuItem, Typography, Button, ListItemIcon, ListItemText} from "@mui/material";
 import {useTranslation} from "react-i18next";
-
-import {InputLabel, Paper, Box, Container, FormControl, Select, MenuItem, Typography, Button, ListItemIcon, ListItemText} from "@mui/material";
-import Grid from '@mui/material/Grid2';
 
 import {useLocalStorage} from "../services/LocalStorage";
 import ccLogo from "../assets/cc.webp";

@@ -1,7 +1,5 @@
-import React from 'react';
-
-import {Paper, Box, Button, Container, Typography} from '@mui/material';
-import Grid from '@mui/material/Grid2';
+import React from "react";
+import {Grid, Paper, Box, Button, Container, Typography} from "@mui/material";
 
 import krakenLogo from "../assets/kraken.webp";
 
@@ -45,31 +43,29 @@ const Grid1Component = () => {
       <Typography variant="h6">Grid-1</Typography>
       <Grid container direction="row" justify="center" alignItems="stretch">
         {/* ROW 1 */}
-        <Grid item xs={12}>
+        <Grid size={12}>
           <Paper>
-            <Typography variant="h4" align='center'>xs=12</Typography>
+            <Typography variant="h4" align="center">size (xs=12)</Typography>
           </Paper>
         </Grid>
         {/* ROW 2 */}
-        <Grid item xs={3}>
+        <Grid size={3}>
           <Grid container alignItems="center" justifyContent="center" sx={{height: "100%"}}>
             <img src={krakenLogo} alt="krakenLogo" width="60" height="60" />
           </Grid>
         </Grid>
         {/* ROW 2 center column rowspan */}
-        <Grid item xs={6}>
+        <Grid size={6}>
           <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="h4" align='center'>p1</Typography>
+            <Grid size={12}>
+              <Typography variant="h4" align="center">p1</Typography>
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h4" align='center'>p2</Typography>
+            <Grid size={12}>
+              <Typography variant="h4" align="center">p2</Typography>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={3}>
-          {/* empty */}
-        </Grid>
+        <Grid size={3}>{/* empty */}</Grid>
       </Grid>
     </Container>
   );
@@ -79,15 +75,15 @@ const Grid2Component = () => {
   return (
     <Container maxWidth="sm">
       <Typography variant="h6">Grid-2</Typography>
-      <Grid container justifyContent="center" item xs={12} spacing={0}>
+      <Grid container justifyContent="center" size={12} spacing={0}>
         <GridRowComponent>
-          <Typography variant="h4" align='center'>1</Typography>
+          <Typography variant="h4" align="center">1</Typography>
         </GridRowComponent>
         <GridRowComponent>
-          <Typography variant="h4" align='center'>2</Typography>
+          <Typography variant="h4" align="center">2</Typography>
         </GridRowComponent>
         <GridRowComponent>
-          <Typography variant="h4" align='center'>3</Typography>
+          <Typography variant="h4" align="center">3</Typography>
         </GridRowComponent>
       </Grid>
     </Container>
@@ -97,11 +93,11 @@ const Grid2Component = () => {
 const GridRowComponent = (props) => {
   return (
     <React.Fragment>
-      <Grid item xs={2} sm={3} md={4} />
-      <Grid item xs={8} sm={6} md={4} sx={{maxWidth: "300px"}}>
+      <Grid size={{xs: 2, sm: 3, md: 4}} />
+      <Grid size={{xs: 8, sm: 6, md: 4}} >
         {props.children}
       </Grid>
-      <Grid item xs={2} sm={3} md={4} />
+      <Grid size={{xs: 2, sm: 3, md: 4}} />
     </React.Fragment>
   );
 };

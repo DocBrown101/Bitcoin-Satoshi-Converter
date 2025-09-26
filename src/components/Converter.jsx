@@ -2,8 +2,8 @@ import React from 'react';
 import {NumericFormat} from 'react-number-format';
 import {useTranslation} from 'react-i18next';
 
-import {Box, Paper, Typography, IconButton} from '@mui/material';
-import Grid from '@mui/material/Grid2';
+import {Grid, Box, Paper, Typography, IconButton} from '@mui/material';
+
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 
@@ -49,7 +49,7 @@ export default function Converter() {
             </Typography>
             <Typography variant="h6">{t("EnterAmount")}</Typography>
           </Box>
-          <Grid container justifyContent="center" item size={{ xs: 12 }} spacing={0}>
+          <Grid container justifyContent="center" size={{xs: 12}} spacing={0}>
             <GridRowComponent
               input={
                 <InputElement label="€ Euro" endLabel="EUR" value={convertedEuro} disabled={eurFiatPrice <= 0 ? true : false} onInputChange={onEuroInputChange} />
@@ -88,11 +88,11 @@ export default function Converter() {
 
 const GridRowComponent = ({input, button}) => (
   <React.Fragment>
-    <Grid item size={{ xs: 2, sm: 3, md: 4 }} />
-    <Grid item size={{ xs: 8, sm: 6, md: 4 }} sx={{maxWidth: "300px", mb: 2}}>
+    <Grid size={{xs: 2, sm: 3, md: 4}} />
+    <Grid size={{xs: 8, sm: 6, md: 4}} sx={{maxWidth: "300px", mb: 2}}>
       {input}
     </Grid>
-    <Grid item size={{ xs: 2, sm: 3, md: 4 }}>
+    <Grid size={{xs: 2, sm: 3, md: 4}}>
       {button}
     </Grid>
   </React.Fragment>

@@ -3,8 +3,7 @@ import {NavLink} from 'react-router-dom';
 import {NumericFormat} from 'react-number-format';
 import {useTranslation} from "react-i18next";
 
-import {Box, Button, Typography, Tooltip} from '@mui/material';
-import Grid from '@mui/material/Grid2';
+import {Grid, Box, Button, Typography, Tooltip} from '@mui/material';
 import {Cached as CachedIcon} from '@mui/icons-material';
 
 import ccLogo from "../assets/cc.webp";
@@ -47,7 +46,7 @@ const ResultComponent = (props) => {
     <Grid container spacing={1} columns={16}>
       <Grid size={4}>
         {/* https://mui.com/material-ui/react-grid2/#interactive */}
-        <Grid container direction="row" sx={{ height: "60px", justifyContent: "flex-end", alignItems: "center" }}>
+        <Grid container direction="row" sx={{height: "60px", justifyContent: "flex-end", alignItems: "center"}}>
           <Tooltip title={props.api ? props.api : ""} placement="bottom">
             <NavLink to="/settings">
               <CurrentApiImageComponent id={props.id} />

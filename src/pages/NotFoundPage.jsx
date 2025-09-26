@@ -1,8 +1,5 @@
-import React from 'react';
 import {useTranslation} from "react-i18next";
-
-import {Paper, Typography} from '@mui/material';
-import Grid from '@mui/material/Grid2';
+import {Grid, Box, Paper, Typography} from '@mui/material';
 
 export default function NotFoundPage() {
   const {t} = useTranslation();
@@ -16,11 +13,11 @@ export default function NotFoundPage() {
         justifyContent="center"
         sx={{minHeight: '30vh'}}
       >
-        <Grid item xs={6} sx={{maxWidth: '90vw'}}>
+        <Box sx={12}>
           <Paper sx={{marginTop: "10px", textAlign: "center"}}>
             <Typography variant="h4" gutterBottom sx={{padding: "10px"}}>{t("PageNotFound")}</Typography>
           </Paper>
-        </Grid>
+        </Box>
       </Grid>
     </div>
   );

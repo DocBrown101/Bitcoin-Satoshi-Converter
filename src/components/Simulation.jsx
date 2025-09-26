@@ -2,8 +2,7 @@ import React from 'react';
 import {NumericFormat} from 'react-number-format';
 import {useTranslation} from "react-i18next";
 
-import {Box, Paper, Typography, Slider, Input, Container} from '@mui/material';
-import Grid from '@mui/material/Grid2';
+import {Grid, Box, Paper, Typography, Slider, Input, Container} from '@mui/material';
 import {Euro as EuroIcon} from '@mui/icons-material';
 
 import SimulationStore from "../stores/SimulationStore";
@@ -49,10 +48,10 @@ export default function FiatPriceSimulation() {
               </Box >
             </Typography>
             <Grid container spacing={2} alignItems="center">
-              <Grid item size="auto">
+              <Grid size="auto">
                 <EuroIcon />
               </Grid>
-              <Grid item size="grow">
+              <Grid size="grow">
                 <Slider
                   value={sliderPrice}
                   step={500}
@@ -61,7 +60,7 @@ export default function FiatPriceSimulation() {
                   onChange={onSliderPriceChange}
                 />
               </Grid>
-              <Grid item size="auto">
+              <Grid size="auto">
                 <Input
                   value={sliderPrice}
                   onChange={onInputChange}
