@@ -1,22 +1,21 @@
-import React from "react";
+import React, {Suspense} from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {ReactQueryDevtools} from "react-query/devtools";
 import {useTranslation} from "react-i18next";
 
 import GitHubIcon from '@mui/icons-material/GitHub';
-import {CssBaseline, Container, Box, Paper, Typography, IconButton, Tooltip} from '@mui/material';
-import {ThemeProvider, createTheme} from '@mui/material/styles';
+import {ThemeProvider, createTheme, CssBaseline, Container, Box, Paper, Typography, IconButton, Tooltip} from '@mui/material';
 
+import LoadingSpinner from "./components/LoadingSpinner"
+import HeaderToolbar from "./components/HeaderToolbar";
+import {useLocalStorage} from './services/LocalStorage';
 import "./translation/i18n";
 
 import HomePage from "./pages/HomePage";
-import TestPage from "./pages/TestPage";
-import SettingsPage from "./pages/SettingsPage";
-import NotFoundPage from "./pages/NotFoundPage";
-
-import HeaderToolbar from "./components/HeaderToolbar";
-import {useLocalStorage} from './services/LocalStorage';
+const TestPage = React.lazy(() => import("./pages/TestPage"));
+const SettingsPage = React.lazy(() => import("./pages/SettingsPage"));
+const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,12 +41,14 @@ export default function App() {
         <CssBaseline />
         <Router>
           <HeaderToolbar isDarkTheme={isDarkTheme} useStateCallback={setIsDarkTheme} />
-          <Routes>
-            <Route path='/' element={<HomePage />} />
-            <Route path='/test' element={<TestPage />} />
-            <Route path='/settings' element={<SettingsPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
+              <Route path='/' element={<HomePage />} />
+              <Route path='/test' element={<TestPage />} />
+              <Route path='/settings' element={<SettingsPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
           <FooterComponent />
           <ReactQueryDevtools />
         </Router>

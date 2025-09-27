@@ -2,6 +2,7 @@ import React from "react";
 import {Grid, Paper, Box, Button, Container, Typography} from "@mui/material";
 
 import krakenLogo from "../assets/kraken.webp";
+import LoadingSpinner from "../components/LoadingSpinner"
 
 export default function TestPage() {
   return (
@@ -33,6 +34,7 @@ const ButtonComponent = () => {
           <Button variant="outlined" color="secondary">Outlined</Button>
         </Box>
       </Paper>
+      <LoadingSpinner withMinHeight={false} />
     </Container>
   );
 };

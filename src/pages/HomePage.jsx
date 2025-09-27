@@ -10,13 +10,13 @@ import FiatPriceQuery from "../components/FiatPriceQuery";
 import MempoolWsComponent from "../components/MempoolWs";
 
 export default function HomePage() {
+  const {t} = useTranslation();
   const [tabValue, setTabValue] = React.useState("1");
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
   };
 
-  const {t} = useTranslation();
   return (
     <Container maxWidth="md">
       <TabContext value={tabValue}>
