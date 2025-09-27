@@ -8,14 +8,12 @@ export default defineConfig({
     target: 'esnext',
     minify: 'esbuild',
     sourcemap: false,
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          if (id.includes('react')) {
-            return 'react-and-tools';
-          }
-          if (id.includes('node_modules/@mui/') || id.includes('node_modules/@emotion/')) {
-            return 'mui-emotion';
+          if (id.includes('react') || id.includes('node_modules/@mui/') || id.includes('node_modules/@emotion/')) {
+            return 'react-mui-emotion';
           }
           if (id.includes('i18next')) {
             return 'i18n';
