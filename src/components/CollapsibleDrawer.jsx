@@ -2,25 +2,35 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {useTranslation} from "react-i18next";
 
-import {SwipeableDrawer, List, Divider, ListItemIcon, ListItemText, ListItemButton} from '@mui/material';
+import {Box, SwipeableDrawer, List, Divider, ListItemIcon, ListItemText, ListItemButton, Typography} from '@mui/material';
 import {Home as HomeIcon, Settings} from '@mui/icons-material';
 
 export default function CollapsibleDrawer(props) {
   const {t} = useTranslation();
   const drawerList = (
-    <List sx={{width: 200, p: 0}}>
-      <ListItemButton sx={{minHeight: 100}} component={Link} to="/">
-        <ListItemIcon><HomeIcon /></ListItemIcon>
-        <ListItemText primary={t("converter")} />
-      </ListItemButton>
+    <Box sx={{width: 200, height: '100vh', display: 'flex', flexDirection: 'column'}}>
+      <List sx={{p: 0}}>
+        <ListItemButton sx={{py: 3}} component={Link} to="/">
+          <ListItemIcon><HomeIcon /></ListItemIcon>
+          <ListItemText primary={t("converter")} />
+        </ListItemButton>
 
-      <Divider />
+        <Divider />
 
-      <ListItemButton component={Link} to="/settings">
-        <ListItemIcon><Settings /></ListItemIcon>
-        <ListItemText primary={t("settings")} />
-      </ListItemButton>
-    </List>
+        <ListItemButton component={Link} to="/settings">
+          <ListItemIcon><Settings /></ListItemIcon>
+          <ListItemText primary={t("settings")} />
+        </ListItemButton>
+      </List>
+
+      <Box sx={{flexGrow: 1}} /> {/* Spacer */}
+
+      <Box sx={{p: 1, textAlign: 'center', mt: 'auto'}}>
+        <Typography variant="caption" color="text.secondary">
+          Version 1.1.0
+        </Typography>
+      </Box>
+    </Box>
   );
 
   return (

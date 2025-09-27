@@ -15,7 +15,7 @@ import "./translation/i18n";
 import HomePage from "./pages/HomePage";
 const TestPage = React.lazy(() => import("./pages/TestPage"));
 const SettingsPage = React.lazy(() => import("./pages/SettingsPage"));
-const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
+import NotFoundPage from "./pages/NotFoundPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
