@@ -1,7 +1,7 @@
 import React, {Suspense} from "react";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import {QueryClient, QueryClientProvider} from 'react-query';
-import {ReactQueryDevtools} from "react-query/devtools";
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import {useTranslation} from "react-i18next";
 
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -20,7 +20,7 @@ const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage"));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: 2 * 60 * 1000,
+      gcTime: 2 * 60 * 1000,
       staleTime: 2 * 60 * 1000,
     },
   },

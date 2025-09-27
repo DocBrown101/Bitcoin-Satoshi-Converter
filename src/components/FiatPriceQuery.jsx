@@ -1,5 +1,5 @@
 import React from 'react';
-import {useQuery, useQueryClient} from 'react-query';
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 
 import {Button, CircularProgress} from '@mui/material';
 import {Cached as CachedIcon} from '@mui/icons-material';
@@ -10,24 +10,25 @@ import FiatPriceResult from './FiatPriceResult';
 
 export default function FiatPriceQuery() {
   console.log("FiatPriceQuery");
-  const fetchResult = useQuery('fetchFiatPrice', fetchFiatPrice());
+
+  const {data, isPending, isError, error} = useQuery({
+    queryKey: ['fetchFiatPrice'],
+    queryFn: fetchFiatPrice,
+  });
+
   const setEurFiatPrice = ConverterStore((state) => state.setEurFiatPrice);
 
-  // React.useEffect is required, otherwise results in a console error
   React.useEffect(() => {
-    if (fetchResult && fetchResult.data && fetchResult.data.EUR && fetchResult.data.USD) {
-      setEurFiatPrice(fetchResult.data.EUR);
+    if (data?.EUR && data?.USD) {
+      setEurFiatPrice(data.EUR);
     }
-  }, [fetchResult, setEurFiatPrice]);
+  }, [data, setEurFiatPrice]);
 
-  switch (fetchResult.status) {
-    case "loading":
-      return (<FiatPriceResult />);
-    case "error":
-      return (<FiatPriceResult error={fetchResult.error.message} />);
-    default:
-      return (<FiatPriceResult eur={fetchResult.data.EUR} usd={fetchResult.data.USD} api={fetchResult.data.API} id={fetchResult.data.ID} loadingButton={<RefreshButton />} />);
-  }
+  if (isPending) {return <FiatPriceResult />;}
+  if (isError) {return <FiatPriceResult error={error.message} />;}
+  return (
+    <FiatPriceResult eur={data.EUR} usd={data.USD} api={data.API} id={data.ID} loadingButton={<RefreshButton />} />
+  );
 }
 
 const RefreshButton = () => {
@@ -36,7 +37,7 @@ const RefreshButton = () => {
 
   React.useEffect(() => {
     if (isLoading) {
-      queryClient.invalidateQueries('fetchFiatPrice');
+      queryClient.invalidateQueries({queryKey: ['fetchFiatPrice']});
       setTimeout(() => {
         setLoading(false);
       }, 1000);
