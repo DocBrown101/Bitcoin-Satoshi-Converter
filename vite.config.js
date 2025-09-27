@@ -11,14 +11,11 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          if (id.includes('node_modules/react/') || id.includes('react-dom')) {
-            return 'react-vendor';
+          if (id.includes('react')) {
+            return 'react-and-tools';
           }
           if (id.includes('node_modules/@mui/') || id.includes('node_modules/@emotion/')) {
             return 'mui-emotion';
-          }
-          if (id.includes('@tanstack/')) {
-            return 'query';
           }
           if (id.includes('i18next')) {
             return 'i18n';
