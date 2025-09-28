@@ -161,23 +161,23 @@ const CurrentFeesComponent = ({feeData, isLoading}) => {
   const {t} = useTranslation();
   return (
     <Paper>
-      <Box fontFamily="Monospace" fontWeight="fontWeightBold" p={2}>
+      <Box p={2}>
         <Grid container spacing={2}>
           <TextPaperCell>{t("HighPriority")}</TextPaperCell>
-          <TextPaperCell>{feeData.fastestFee} sat/vB = {fastest.replace(".", ",")} €</TextPaperCell>
+          <TextPaperCell useMonospace={true}>{feeData.fastestFee} sat/vB = {fastest.replace(".", ",")} €</TextPaperCell>
 
           <TextPaperCell>{t("MediumPriority")}</TextPaperCell>
-          <TextPaperCell>{feeData.hourFee} sat/vB = {medium.replace(".", ",")} €</TextPaperCell>
+          <TextPaperCell useMonospace={true}>{feeData.hourFee} sat/vB = {medium.replace(".", ",")} €</TextPaperCell>
 
           <TextPaperCell>{t("NoPriority")}</TextPaperCell>
-          <TextPaperCell>{feeData.minimumFee} sat/vB = {minimum.replace(".", ",")} €</TextPaperCell>
+          <TextPaperCell useMonospace={true}>{feeData.minimumFee} sat/vB = {minimum.replace(".", ",")} €</TextPaperCell>
         </Grid>
       </Box >
     </Paper>
   );
 };
 
-const TextPaperCell = ({children}) => {
+const TextPaperCell = ({useMonospace, children}) => {
   return (
     <Grid size={6}>
       <Paper
@@ -185,9 +185,9 @@ const TextPaperCell = ({children}) => {
           backgroundColor: (theme) =>
             theme.palette.mode === 'dark' ? '#1e1e1e' : '#fff',
           padding: 1,
-          fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-          fontSize: '1rem',
-          fontWeight: 400,
+          ...(useMonospace && {
+            fontFamily: 'Monospace',
+          }),
           textAlign: 'center',
           color: 'text.secondary',
         }}>
