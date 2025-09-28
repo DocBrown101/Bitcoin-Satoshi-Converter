@@ -6,6 +6,7 @@ import {useTranslation} from "react-i18next";
 
 import GitHubIcon from '@mui/icons-material/GitHub';
 import {ThemeProvider, createTheme, CssBaseline, Container, Box, Paper, Typography, IconButton, Tooltip} from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import LoadingSpinner from "./components/LoadingSpinner"
 import HeaderToolbar from "./components/HeaderToolbar";
@@ -31,8 +32,8 @@ const openInNewTab = (url) => {
 };
 
 export default function App() {
-  const [isDarkTheme, setIsDarkTheme] = useLocalStorage("isDarkTheme", false);
-
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const [isDarkTheme, setIsDarkTheme] = useLocalStorage("isDarkTheme", prefersDarkMode);
   const appliedTheme = createTheme(isDarkTheme ? dark : light);
 
   return (
