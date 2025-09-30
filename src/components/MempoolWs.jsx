@@ -180,10 +180,8 @@ const CurrentFeesComponent = ({feeData, isLoading}) => {
 const TextPaperCell = ({useMonospace, children}) => {
   return (
     <Grid size={6}>
-      <Paper
+      <Paper elevation={6}
         sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'dark' ? '#1e1e1e' : '#fff',
           padding: 1,
           ...(useMonospace && {
             fontFamily: 'Monospace',
