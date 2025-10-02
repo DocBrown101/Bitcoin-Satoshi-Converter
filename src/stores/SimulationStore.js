@@ -1,30 +1,30 @@
-import { create } from "zustand";
+import {create} from 'zustand';
+import {convertEuroToSats, calculateOneFiatSats} from '../utils/currencyConverter';
 
 const INITIAL_SLIDER_PRICE = 85_000;
-const SATS_PER_BTC = 100_000_000;
 
 const useStore = create((set) => ({
-  sats: ((10 / INITIAL_SLIDER_PRICE) * SATS_PER_BTC).toFixed(0),
+  sats: convertEuroToSats(10, INITIAL_SLIDER_PRICE),
   fiatPrice: 10,
   sliderPrice: INITIAL_SLIDER_PRICE,
-  oneFiatSats: ((1 / INITIAL_SLIDER_PRICE) * SATS_PER_BTC).toFixed(0),
+  oneFiatSats: calculateOneFiatSats(INITIAL_SLIDER_PRICE),
 
-  onFiatPriceChange: (values) => {
-    const { value } = values;
-    set(() => ({ fiatPrice: parseFloat(value) }));
-    set((state) => ({ sats: ((state.fiatPrice / state.sliderPrice) * SATS_PER_BTC).toFixed(0) }));
-    set((state) => ({ oneFiatSats: ((1 / state.sliderPrice) * SATS_PER_BTC).toFixed(0) }));
+  onFiatPriceChange: (euroAmount) => {
+    const fiatAmount = parseFloat(euroAmount);
+    set((state) => ({
+      fiatPrice: fiatAmount,
+      sats: convertEuroToSats(fiatAmount, state.sliderPrice),
+      oneFiatSats: calculateOneFiatSats(state.sliderPrice)
+    }));
   },
-  onSliderPriceChange: (event, newValue) => {
-    set(() => ({ sliderPrice: newValue }));
-    set((state) => ({ sats: ((state.fiatPrice / state.sliderPrice) * SATS_PER_BTC).toFixed(0) }));
-    set((state) => ({ oneFiatSats: ((1 / state.sliderPrice) * SATS_PER_BTC).toFixed(0) }));
-  },
-  onInputChange: (event) => {
-    set(() => ({ sliderPrice: event.target.value }));
-    set((state) => ({ sats: ((state.fiatPrice / state.sliderPrice) * SATS_PER_BTC).toFixed(0) }));
-    set((state) => ({ oneFiatSats: ((1 / state.sliderPrice) * SATS_PER_BTC).toFixed(0) }));
-  },
+
+  onBtcPriceChange: (btcPrice) => {
+    set((state) => ({
+      sliderPrice: btcPrice,
+      sats: convertEuroToSats(state.fiatPrice, btcPrice),
+      oneFiatSats: calculateOneFiatSats(btcPrice)
+    }));
+  }
 }));
 
 export default useStore;

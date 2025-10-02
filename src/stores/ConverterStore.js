@@ -1,4 +1,5 @@
 import {create} from 'zustand';
+import {convertEuroToSats, convertEuroToBtc, convertBtcToSats, convertBtcToEuro, convertSatsToBtc, convertSatsToEuro, calculateOneFiatSats} from '../utils/currencyConverter';
 
 const useStore = create((set) => ({
   eurFiatPrice: 0,
@@ -6,41 +7,53 @@ const useStore = create((set) => ({
   convertedBitcoin: '',
   convertedSatoshi: '',
   convertedEuro: '',
+
   setEurFiatPrice: (eurFiatPrice) => {
-    set(() => ({eurFiatPrice: eurFiatPrice}));
-    set(() => ({oneFiatSats: ((1 / eurFiatPrice) * 100000000).toFixed(0)}));
+    set({
+      eurFiatPrice,
+      oneFiatSats: calculateOneFiatSats(eurFiatPrice)
+    });
   },
+
   onEuroInputChange: (values, sourceInfo) => {
-    if (sourceInfo.source === 'prop') {
-      return;
-    }
-    const {value} = values;
-    set((state) => ({convertedBitcoin: parseFloat((value / state.eurFiatPrice).toFixed(8))}));
-    set((state) => ({convertedSatoshi: ((value / state.eurFiatPrice) * 100000000).toFixed(0)}));
-    set(() => ({convertedEuro: value}));
+    if (sourceInfo.source === 'prop') return;
+
+    const {value: euroAmount} = values;
+    set((state) => ({
+      convertedBitcoin: convertEuroToBtc(euroAmount, state.eurFiatPrice),
+      convertedSatoshi: convertEuroToSats(euroAmount, state.eurFiatPrice),
+      convertedEuro: euroAmount
+    }));
   },
+
   onBitcoinInputChange: (values, sourceInfo) => {
-    if (sourceInfo.source === 'prop') {
-      return;
-    }
-    const {value} = values;
-    set(() => ({convertedSatoshi: (value * 100000000).toFixed(0)}));
-    set((state) => ({convertedEuro: (value * state.eurFiatPrice).toFixed(2)}));
-    set(() => ({convertedBitcoin: value}));
+    if (sourceInfo.source === 'prop') return;
+
+    const {value: btcAmount} = values;
+    set((state) => ({
+      convertedBitcoin: btcAmount,
+      convertedSatoshi: convertBtcToSats(btcAmount),
+      convertedEuro: convertBtcToEuro(btcAmount, state.eurFiatPrice)
+    }));
   },
+
   onSatoshiInputChange: (values, sourceInfo) => {
-    if (sourceInfo.source === 'prop') {
-      return;
-    }
-    const {value} = values;
-    set(() => ({convertedBitcoin: parseFloat((value / 100000000).toFixed(8))}));
-    set((state) => ({convertedEuro: ((value * state.eurFiatPrice) / 100000000).toFixed(2)}));
-    set(() => ({convertedSatoshi: value}));
+    if (sourceInfo.source === 'prop') return;
+
+    const {value: satsAmount} = values;
+    set((state) => ({
+      convertedBitcoin: convertSatsToBtc(satsAmount),
+      convertedSatoshi: satsAmount,
+      convertedEuro: convertSatsToEuro(satsAmount, state.eurFiatPrice)
+    }));
   },
+
   resetConvertedState: () => {
-    set(() => ({convertedBitcoin: ''}));
-    set(() => ({convertedSatoshi: ''}));
-    set(() => ({convertedEuro: ''}));
+    set({
+      convertedBitcoin: '',
+      convertedSatoshi: '',
+      convertedEuro: ''
+    });
   }
 }));
 

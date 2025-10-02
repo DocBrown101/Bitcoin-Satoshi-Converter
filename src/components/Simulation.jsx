@@ -16,15 +16,14 @@ export default function FiatPriceSimulation() {
   const oneFiatSats = SimulationStore((state) => state.oneFiatSats);
   const fiatPrice = SimulationStore((state) => state.fiatPrice);
   const sliderPrice = SimulationStore((state) => state.sliderPrice);
-  const onInputChange = SimulationStore((state) => state.onInputChange);
   const onFiatPriceChange = SimulationStore((state) => state.onFiatPriceChange);
-  const onSliderPriceChange = SimulationStore((state) => state.onSliderPriceChange);
+  const onBtcPriceChange = SimulationStore((state) => state.onBtcPriceChange);
 
   const handleBlur = () => {
     if (sliderPrice < minPrice) {
-      onSliderPriceChange(null, minPrice);
+      onBtcPriceChange(minPrice);
     } else if (sliderPrice > maxPrice) {
-      onSliderPriceChange(null, maxPrice);
+      onBtcPriceChange(maxPrice);
     }
   };
 
@@ -57,13 +56,13 @@ export default function FiatPriceSimulation() {
                   step={500}
                   min={minPrice}
                   max={maxPrice}
-                  onChange={onSliderPriceChange}
+                  onChange={(event, value) => onBtcPriceChange(value)}
                 />
               </Grid>
               <Grid size="auto">
                 <Input
                   value={sliderPrice}
-                  onChange={onInputChange}
+                  onChange={(event) => onBtcPriceChange(event.target.value)}
                   onBlur={handleBlur}
                   inputProps={{
                     step: 100,
@@ -81,7 +80,7 @@ export default function FiatPriceSimulation() {
       <Container maxWidth="sm">
         <Paper>
           <Stack alignItems="center" sx={{p: 3}}>
-            <InputElement label="€ Euro" endLabel="EUR" value={fiatPrice} onInputChange={onFiatPriceChange} />
+            <InputElement label="€ Euro" endLabel="EUR" value={fiatPrice} onInputChange={(values) => onFiatPriceChange(values.value)} />
             <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" sx={{pt: 1}}>
               <Typography color="secondary" variant="h6">
                 <NumericFormat
