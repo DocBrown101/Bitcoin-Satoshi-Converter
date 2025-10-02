@@ -1,10 +1,12 @@
 import { create } from "zustand";
 
+const INITIAL_SLIDER_PRICE = 75000;
+
 const useStore = create((set) => ({
-  sats: ((10 / 55000) * 100000000).toFixed(0),
+  sats: ((10 / INITIAL_SLIDER_PRICE) * 100000000).toFixed(0),
   fiatPrice: 10,
-  sliderPrice: 55000,
-  oneFiatSats: ((1 / 55000) * 100000000).toFixed(0),
+  sliderPrice: INITIAL_SLIDER_PRICE,
+  oneFiatSats: ((1 / INITIAL_SLIDER_PRICE) * 100000000).toFixed(0),
 
   onFiatPriceChange: (values) => {
     const { value } = values;

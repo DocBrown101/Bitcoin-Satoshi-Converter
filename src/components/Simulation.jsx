@@ -2,7 +2,7 @@ import React from 'react';
 import {NumericFormat} from 'react-number-format';
 import {useTranslation} from "react-i18next";
 
-import {Grid, Box, Paper, Typography, Slider, Input, Container} from '@mui/material';
+import {Grid, Box, Paper, Typography, Slider, Input, Container, Stack} from '@mui/material';
 import {Euro as EuroIcon} from '@mui/icons-material';
 
 import SimulationStore from "../stores/SimulationStore";
@@ -80,9 +80,9 @@ export default function FiatPriceSimulation() {
 
       <Container maxWidth="sm">
         <Paper>
-          <Grid container justifyContent="center" alignItems="center" sx={{p: 3}}>
+          <Stack alignItems="center" sx={{p: 3}}>
             <InputElement label="€ Euro" endLabel="EUR" value={fiatPrice} onInputChange={onFiatPriceChange} />
-            <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" sx={{mx: 2, p: 1}}>
+            <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" sx={{pt: 1}}>
               <Typography color="secondary" variant="h6">
                 <NumericFormat
                   value={sats}
@@ -94,8 +94,8 @@ export default function FiatPriceSimulation() {
                   decimalSeparator={','}
                 />
               </Typography>
-            </Box >
-          </Grid>
+            </Box>
+          </Stack>
         </Paper>
       </Container>
     </React.Fragment>
