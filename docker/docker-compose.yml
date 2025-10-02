@@ -1,0 +1,21 @@
+services:
+  app:
+    image: docbrown101/bitcoin-satoshi-converter:latest
+    container_name: bitcoin-converter
+    restart: on-failure:1
+    ports:
+      - 8080:80
+    user: 1000:1000
+    security_opt:
+      - apparmor:docker-default
+      - no-new-privileges
+    cpu_shares: 10
+    pids_limit: 10
+    mem_limit: 100m
+    read_only: true
+    volumes:
+      # Use the same time zone as the host machine.
+      - /etc/localtime:/etc/localtime:ro
+    tmpfs:
+      - /var/run:mode=770,size=512K,uid=1000,gid=1000
+      - /var/cache/nginx:mode=770,size=512K,uid=1000,gid=1000
