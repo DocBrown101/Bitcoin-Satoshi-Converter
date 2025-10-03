@@ -5,19 +5,19 @@ import {useTranslation} from "react-i18next";
 import {Grid, Box, Paper, Typography, Slider, Input, Container, Stack} from '@mui/material';
 import {Euro as EuroIcon} from '@mui/icons-material';
 
-import SimulationStore from "../stores/SimulationStore";
+import ConverterStore from "../stores/ConverterStore";
 import InputElement from './InputElement';
 
 export default function FiatPriceSimulation() {
-  const minPrice = 5000;
-  const maxPrice = 250000;
+  const minPrice = 5_000;
+  const maxPrice = 500_000;
 
-  const sats = SimulationStore((state) => state.sats);
-  const oneFiatSats = SimulationStore((state) => state.oneFiatSats);
-  const fiatPrice = SimulationStore((state) => state.fiatPrice);
-  const sliderPrice = SimulationStore((state) => state.sliderPrice);
-  const onFiatPriceChange = SimulationStore((state) => state.onFiatPriceChange);
-  const onBtcPriceChange = SimulationStore((state) => state.onBtcPriceChange);
+  const sats = ConverterStore((state) => state.simSats);
+  const oneFiatSats = ConverterStore((state) => state.simOneFiatSats);
+  const fiatPrice = ConverterStore((state) => state.simFiatPrice);
+  const sliderPrice = ConverterStore((state) => state.simSliderPrice);
+  const onFiatPriceChange = ConverterStore((state) => state.onSimFiatPriceChange);
+  const onBtcPriceChange = ConverterStore((state) => state.onSimBtcPriceChange);
 
   const handleBlur = () => {
     if (sliderPrice < minPrice) {
@@ -53,7 +53,7 @@ export default function FiatPriceSimulation() {
               <Grid size="grow">
                 <Slider
                   value={sliderPrice}
-                  step={500}
+                  step={1000}
                   min={minPrice}
                   max={maxPrice}
                   onChange={(event, value) => onBtcPriceChange(value)}
