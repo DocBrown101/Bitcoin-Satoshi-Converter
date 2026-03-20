@@ -56,13 +56,13 @@ export default function FiatPriceSimulation() {
                   step={1000}
                   min={minPrice}
                   max={maxPrice}
-                  onChange={(event, value) => onBtcPriceChange(value)}
+                  onChange={(_event, value) => onBtcPriceChange(value as number)}
                 />
               </Grid>
               <Grid size="auto">
                 <Input
                   value={sliderPrice}
-                  onChange={(event) => onBtcPriceChange(event.target.value)}
+                  onChange={(event) => onBtcPriceChange(Number(event.target.value))}
                   onBlur={handleBlur}
                   inputProps={{
                     step: 100,

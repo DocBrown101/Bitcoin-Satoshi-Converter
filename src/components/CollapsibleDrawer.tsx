@@ -1,12 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {useTranslation} from "react-i18next";
 
 import {Box, SwipeableDrawer, List, Divider, ListItemIcon, ListItemText, ListItemButton, Typography} from '@mui/material';
 import {Home as HomeIcon, Settings} from '@mui/icons-material';
 
-export default function CollapsibleDrawer(props) {
+interface CollapsibleDrawerProps {
+  isDrawerOpen: boolean;
+  toggleDrawer: (open: boolean) => () => void;
+}
+
+export default function CollapsibleDrawer({isDrawerOpen, toggleDrawer}: CollapsibleDrawerProps) {
   const {t} = useTranslation();
   const drawerList = (
     <Box sx={{width: 200, height: '100vh', display: 'flex', flexDirection: 'column'}}>
@@ -35,20 +38,19 @@ export default function CollapsibleDrawer(props) {
   );
 
   return (
-    <SwipeableDrawer open={props.isDrawerOpen} onClose={props.toggleDrawer(false)} onOpen={props.toggleDrawer(true)}>
+    <SwipeableDrawer open={isDrawerOpen} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
       <div
         tabIndex={0}
         role="button"
-        onClick={props.toggleDrawer(false)}
-        onKeyDown={props.toggleDrawer(false)}
+        onClick={toggleDrawer(false)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            toggleDrawer(false)();
+          }
+        }}
       >
         {drawerList}
       </div>
     </SwipeableDrawer>
   );
-}
-
-CollapsibleDrawer.propTypes = {
-  isDrawerOpen: PropTypes.any,
-  toggleDrawer: PropTypes.func
 }

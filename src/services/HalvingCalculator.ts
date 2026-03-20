@@ -6,38 +6,47 @@ const MS_IN_MINUTE = MS_IN_SECOND * 60;
 const MS_IN_HOUR = MS_IN_MINUTE * 60;
 const MS_IN_DAY = MS_IN_HOUR * 24;
 
-function calculateBlocksToHalving(lastBlockHeight) {
+export interface HalvingData {
+  blocksToNextHalving: number;
+  timeToHalving: number;
+  estimatedDate: Date;
+  estimatedDays: number | undefined;
+  estimatedHours: number | undefined;
+  estimatedMinutes: number;
+}
+
+function calculateBlocksToHalving(lastBlockHeight: number): number {
   const blocksInCurrentHalving = lastBlockHeight % HALVING_EPOCH;
 
   return HALVING_EPOCH - blocksInCurrentHalving;
 }
 
-function calculateBlocksToDifficultyAdjustment(lastBlockHeight) {
+function calculateBlocksToDifficultyAdjustment(lastBlockHeight: number): number {
   const blocksInCurrentDifficulty = lastBlockHeight % DIFFICULTY_EPOCH;
 
   return DIFFICULTY_EPOCH - blocksInCurrentDifficulty;
 }
 
-function splitDuration(ms) {
+function splitDuration(ms: number): [number | undefined, number | undefined, number] {
   const d = Math.floor(ms / MS_IN_DAY);
   const h = Math.floor((ms - MS_IN_DAY * d) / MS_IN_HOUR);
   const m = Math.floor((ms - MS_IN_DAY * d - MS_IN_HOUR * h) / MS_IN_MINUTE);
 
-  let days = undefined;
-  let houres = undefined;
+  let days: number | undefined = undefined;
+  let hours: number | undefined = undefined;
 
   if (d > 0) {
     days = d;
   }
 
   if (d > 0 || h > 0) {
-    houres = h;
+    hours = h;
   }
 
-  return [days, houres, m];
+  return [days, hours, m];
 }
 
-function calculateHalvingData(currentAverageBlockTime, lastBlockHeight) {
+function calculateHalvingData(currentAverageBlockTime: number, lastBlockHeight: number): HalvingData {
   const blocksToNextHalving = calculateBlocksToHalving(lastBlockHeight);
 
   const blocksInCurrentDifficulty = Math.min(
@@ -59,16 +68,15 @@ function calculateHalvingData(currentAverageBlockTime, lastBlockHeight) {
     otherBlocks * TARGET_BLOCK_TIME;
 
   const estimatedDate = new Date(Date.now() + timeToHalving);
-  const [estimatedDays, estimatedHoures, estimatedMinutes] = splitDuration(timeToHalving);
+  const [estimatedDays, estimatedHours, estimatedMinutes] = splitDuration(timeToHalving);
 
-  const data = {
+  const data: HalvingData = {
     blocksToNextHalving,
     timeToHalving,
     estimatedDate,
     estimatedDays,
-    estimatedHoures,
+    estimatedHours,
     estimatedMinutes,
-    estimatedAverageForCurrentDifficulty,
   };
 
   return data;

@@ -9,7 +9,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ConverterStore from "../stores/ConverterStore";
 import calculateHalvingData from '../services/HalvingCalculator';
 
-const formatDate = (date, timeZone, locales) => {
+const WS_URL = "wss://mempool.space/api/v1/ws";
+
+const formatDate = (date: Date, timeZone: string, locales: string) => {
   return (
     new Intl.DateTimeFormat(locales, {
       weekday: "long",
@@ -23,18 +25,32 @@ const formatDate = (date, timeZone, locales) => {
   );
 };
 
+interface FeeData {
+  fastestFee: number;
+  hourFee: number;
+  minimumFee: number;
+}
+
+interface BlockData {
+  height: number;
+}
+
+interface WebSocketMessage {
+  da?: { timeAvg: number };
+  fees?: FeeData;
+  blocks?: BlockData[];
+  block?: BlockData;
+}
+
 // https://mempool.space/de/docs/api/websocket
 export default function MempoolWsComponent() {
-  const wsUrl = "wss://mempool.space/api/v1/ws";
-  // const wsUrl = "ws://192.168.0.39:3006/api/v1/ws";
-
   const [webSocketReady, setWebSocketReady] = useState(false);
-  const [lastFeeData, setLastFeeData] = useState();
-  const [lastBlockData, setLastBlockData] = useState();
-  const [lastTimeAvg, setLastTimeAvg] = useState();
+  const [lastFeeData, setLastFeeData] = useState<FeeData>();
+  const [lastBlockData, setLastBlockData] = useState<BlockData>();
+  const [lastTimeAvg, setLastTimeAvg] = useState<number>();
 
   useEffect(() => {
-    const newWebSocket = new WebSocket(wsUrl);
+    const newWebSocket = new WebSocket(WS_URL);
 
     newWebSocket.onopen = () => {
       setWebSocketReady(true);
@@ -52,8 +68,8 @@ export default function MempoolWsComponent() {
       }
     };
 
-    newWebSocket.onmessage = (event) => {
-      const serverData = JSON.parse(event.data);
+    newWebSocket.onmessage = (event: MessageEvent) => {
+      const serverData: WebSocketMessage = JSON.parse(event.data as string);
 
       if (serverData.da) {
         setLastTimeAvg(serverData.da.timeAvg);
@@ -75,8 +91,8 @@ export default function MempoolWsComponent() {
       setWebSocketReady(false);
     };
 
-    newWebSocket.onerror = (err) => {
-      console.log('Socket encountered error: ', err.message, 'Closing socket');
+    newWebSocket.onerror = () => {
+      console.log('Socket encountered error. Closing socket');
       setWebSocketReady(false);
       newWebSocket.close();
     };
@@ -120,12 +136,19 @@ export default function MempoolWsComponent() {
   );
 }
 
-const HalvingComponent = ({blockData, timeAvg, isLoading}) => {
-  if (isLoading) {
+interface HalvingComponentProps {
+  blockData?: BlockData;
+  timeAvg?: number;
+  isLoading: boolean;
+}
+
+const HalvingComponent = ({blockData, timeAvg, isLoading}: HalvingComponentProps) => {
+  const {t} = useTranslation();
+
+  if (isLoading || !blockData || !timeAvg) {
     return (<Skeleton variant="rounded" height={120} />);
   }
 
-  const {t} = useTranslation();
   const halvingData = calculateHalvingData(timeAvg, blockData.height);
   const date = formatDate(halvingData.estimatedDate, t("TimeZone"), t("Locales"));
 
@@ -140,22 +163,29 @@ const HalvingComponent = ({blockData, timeAvg, isLoading}) => {
           thousandSeparator={'.'}
           decimalSeparator={','} />
       </Typography>
-      <Typography>{halvingData.estimatedDays} days {halvingData.estimatedHoures} hours {halvingData.estimatedMinutes} minutes</Typography>
+      <Typography>{halvingData.estimatedDays} days {halvingData.estimatedHours} hours {halvingData.estimatedMinutes} minutes</Typography>
       <Typography variant="h6" color="secondary">{date}</Typography>
     </Box >
   );
 };
 
-const CurrentFeesComponent = ({feeData, isLoading}) => {
-  if (isLoading) {
+interface CurrentFeesComponentProps {
+  feeData?: FeeData;
+  isLoading: boolean;
+}
+
+const CurrentFeesComponent = ({feeData, isLoading}: CurrentFeesComponentProps) => {
+  const eurFiatPrice = ConverterStore((state) => state.eurFiatPrice);
+  const {t} = useTranslation();
+
+  if (isLoading || !feeData) {
     return (<Skeleton variant="rounded" height={184} />);
   }
 
-  const eurFiatPrice = ConverterStore((state) => state.eurFiatPrice);
   const fastest = ((feeData.fastestFee * 140 * eurFiatPrice) / 100000000).toFixed(2);
   const medium = ((feeData.hourFee * 140 * eurFiatPrice) / 100000000).toFixed(2);
   const minimum = ((feeData.minimumFee * 140 * eurFiatPrice) / 100000000).toFixed(2);
-  const {t} = useTranslation();
+
   return (
     <Paper>
       <Box p={2}>
@@ -174,7 +204,12 @@ const CurrentFeesComponent = ({feeData, isLoading}) => {
   );
 };
 
-const TextPaperCell = ({useMonospace, children}) => {
+interface TextPaperCellProps {
+  useMonospace?: boolean;
+  children: React.ReactNode;
+}
+
+const TextPaperCell = ({useMonospace, children}: TextPaperCellProps) => {
   return (
     <Grid size={6}>
       <Paper elevation={6}
