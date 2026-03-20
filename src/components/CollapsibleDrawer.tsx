@@ -5,8 +5,8 @@ import {Box, SwipeableDrawer, List, Divider, ListItemIcon, ListItemText, ListIte
 import {Home as HomeIcon, Settings} from '@mui/icons-material';
 
 interface CollapsibleDrawerProps {
-  isDrawerOpen: boolean;
-  toggleDrawer: (open: boolean) => () => void;
+  readonly isDrawerOpen: boolean;
+  readonly toggleDrawer: (open: boolean) => () => void;
 }
 
 export default function CollapsibleDrawer({isDrawerOpen, toggleDrawer}: CollapsibleDrawerProps) {
@@ -39,18 +39,13 @@ export default function CollapsibleDrawer({isDrawerOpen, toggleDrawer}: Collapsi
 
   return (
     <SwipeableDrawer open={isDrawerOpen} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
-      <div
-        tabIndex={0}
-        role="button"
+      <button
+        type="button"
         onClick={toggleDrawer(false)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            toggleDrawer(false)();
-          }
-        }}
+        style={{all: 'unset', width: '100%', cursor: 'pointer'}}
       >
         {drawerList}
-      </div>
+      </button>
     </SwipeableDrawer>
   );
 }

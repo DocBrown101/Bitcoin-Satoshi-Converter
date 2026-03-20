@@ -4,11 +4,11 @@ import {InputAdornment, TextField} from '@mui/material';
 import {Input as InputIcon} from '@mui/icons-material';
 
 interface InputElementProps {
-  label: string;
-  endLabel: string;
-  value: number | string;
-  disabled?: boolean;
-  onInputChange: (values: NumberFormatValues, sourceInfo: SourceInfo) => void;
+  readonly label: string;
+  readonly endLabel: string;
+  readonly value: number | string;
+  readonly disabled?: boolean;
+  readonly onInputChange: (values: NumberFormatValues, sourceInfo: SourceInfo) => void;
 }
 
 export default function InputElement({label, endLabel, value, disabled, onInputChange}: InputElementProps) {

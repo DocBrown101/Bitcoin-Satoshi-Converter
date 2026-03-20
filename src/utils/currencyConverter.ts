@@ -5,7 +5,7 @@ export const convertEuroToSats = (euro: number | string, btcPrice: number): stri
 };
 
 export const convertEuroToBtc = (euro: number | string, btcPrice: number): number => {
-  return parseFloat((Number(euro) / btcPrice).toFixed(8));
+  return Number.parseFloat((Number(euro) / btcPrice).toFixed(8));
 };
 
 export const convertBtcToSats = (btc: number | string): string => {
@@ -17,7 +17,7 @@ export const convertBtcToEuro = (btc: number | string, btcPrice: number): string
 };
 
 export const convertSatsToBtc = (sats: number | string): number => {
-  return parseFloat((Number(sats) / SATS_PER_BTC).toFixed(8));
+  return Number.parseFloat((Number(sats) / SATS_PER_BTC).toFixed(8));
 };
 
 export const convertSatsToEuro = (sats: number | string, btcPrice: number): string => {

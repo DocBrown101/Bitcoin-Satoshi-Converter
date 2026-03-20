@@ -7,8 +7,8 @@ import {Menu as MenuIcon, Brightness3 as Brightness3Icon, Brightness7 as Brightn
 import CollapsibleDrawer from './CollapsibleDrawer';
 
 interface HeaderToolbarProps {
-  isDarkTheme: boolean;
-  useStateCallback: (value: boolean) => void;
+  readonly isDarkTheme: boolean;
+  readonly useStateCallback: (value: boolean) => void;
 }
 
 export default function HeaderToolbar({isDarkTheme, useStateCallback}: HeaderToolbarProps) {

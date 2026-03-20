@@ -39,8 +39,8 @@ export function fetchFiatPrice(): Promise<FiatPriceData> {
     ).then((response) =>
       response.json().then((data: { quotes: { EUR: { price: string }; USD: { price: string } } }) => ({
         ID: 30,
-        EUR: parseFloat(data.quotes.EUR.price),
-        USD: parseFloat(data.quotes.USD.price),
+        EUR: Number.parseFloat(data.quotes.EUR.price),
+        USD: Number.parseFloat(data.quotes.USD.price),
         API: "coinpaprika",
       }))
     );
@@ -49,8 +49,8 @@ export function fetchFiatPrice(): Promise<FiatPriceData> {
       (response) =>
         response.json().then((data: { result: { XXBTZEUR: { a: string[] }; XXBTZUSD: { a: string[] } } }) => ({
           ID: 40,
-          EUR: parseFloat(data.result.XXBTZEUR.a[0]),
-          USD: parseFloat(data.result.XXBTZUSD.a[0]),
+          EUR: Number.parseFloat(data.result.XXBTZEUR.a[0]),
+          USD: Number.parseFloat(data.result.XXBTZUSD.a[0]),
           API: "Kraken",
         }))
     );

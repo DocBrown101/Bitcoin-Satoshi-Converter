@@ -12,12 +12,12 @@ import coinpaprika from "../assets/coinpaprika.webp";
 import krakenLogo from "../assets/kraken.webp";
 
 interface FiatPriceResultProps {
-  api?: string;
-  error?: string;
-  eur?: number;
-  id?: number;
-  loadingButton?: ReactNode;
-  usd?: number;
+  readonly api?: string;
+  readonly error?: string;
+  readonly eur?: number;
+  readonly id?: number;
+  readonly loadingButton?: ReactNode;
+  readonly usd?: number;
 }
 
 export default function FiatPriceResult({api, error, eur, id, loadingButton, usd}: FiatPriceResultProps) {
@@ -63,7 +63,7 @@ const ResultComponent = ({id, api, eur, usd}: ResultComponentProps) => {
       <Grid size={4}>
         {/* https://mui.com/material-ui/react-grid2/#interactive */}
         <Grid container direction="row" sx={{height: "60px", justifyContent: "flex-end", alignItems: "center"}}>
-          <Tooltip title={api ? api : ""} placement="bottom">
+          <Tooltip title={api} placement="bottom">
             <NavLink to="/settings">
               <CurrentApiImageComponent id={id} />
             </NavLink>

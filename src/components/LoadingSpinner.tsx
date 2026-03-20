@@ -2,7 +2,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
 interface LoadingSpinnerProps {
-  withMinHeight?: boolean;
+  readonly withMinHeight?: boolean;
 }
 
 export default function LoadingSpinner({withMinHeight = true}: LoadingSpinnerProps) {
