@@ -8,10 +8,10 @@ import CollapsibleDrawer from './CollapsibleDrawer';
 
 interface HeaderToolbarProps {
   readonly isDarkTheme: boolean;
-  readonly useStateCallback: (value: boolean) => void;
+  readonly onThemeChange: (value: boolean) => void;
 }
 
-export default function HeaderToolbar({isDarkTheme, useStateCallback}: HeaderToolbarProps) {
+export default function HeaderToolbar({isDarkTheme, onThemeChange}: HeaderToolbarProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = (open: boolean) => () => {
@@ -35,7 +35,7 @@ export default function HeaderToolbar({isDarkTheme, useStateCallback}: HeaderToo
           </NavLink>
 
           <Tooltip title={isDarkTheme ? 'Light Theme' : 'Dark Theme'}>
-            <IconButton color="inherit" aria-label="Theme" onClick={() => useStateCallback(!isDarkTheme)}>
+            <IconButton color="inherit" aria-label="Theme" onClick={() => onThemeChange(!isDarkTheme)}>
               {isDarkTheme ? <Brightness7Icon /> : <Brightness3Icon />}
             </IconButton>
           </Tooltip>

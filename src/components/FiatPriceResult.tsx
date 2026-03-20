@@ -35,10 +35,7 @@ export default function FiatPriceResult({api, error, eur, id, loadingButton, usd
         mx="auto">
         <Grid container direction="row" alignItems="center">
           <Typography variant="h6">{t("CurrentPrice")}</Typography>
-          {loadingButton
-            ? loadingButton
-            : <Button color="primary" size="small" disabled><CachedIcon /></Button>
-          }
+          {loadingButton ?? <Button color="primary" size="small" disabled><CachedIcon /></Button>}
         </Grid>
 
         {eur && usd

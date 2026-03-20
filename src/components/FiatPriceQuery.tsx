@@ -50,7 +50,7 @@ const RefreshButton = () => {
       color="primary"
       size="small"
       disabled={isLoading}
-      onClick={!isLoading ? handleClick : undefined}>
+      onClick={isLoading ? undefined : handleClick }>
       {isLoading ? <CircularProgress size={24} color="secondary" /> : <CachedIcon />}
     </Button>
   );
