@@ -105,7 +105,7 @@ const useStore = create<ConverterState>((set) => ({
   },
 
   onSimFiatPriceChange: (euroAmount) => {
-    const fiatAmount = parseFloat(euroAmount);
+    const fiatAmount = Number.parseFloat(euroAmount);
     set((state) => ({
       simFiatPrice: fiatAmount,
       simSats: convertEuroToSats(fiatAmount, state.simSliderPrice),
