@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types"
 import {NavLink} from 'react-router-dom';
 import {NumericFormat} from 'react-number-format';
 import {useTranslation} from "react-i18next";
@@ -39,6 +40,15 @@ export default function FiatPriceResult(props) {
       </Box>
     </Box >
   );
+}
+
+FiatPriceResult.propTypes = {
+  api: PropTypes.any,
+  error: PropTypes.any,
+  eur: PropTypes.any,
+  id: PropTypes.any,
+  loadingButton: PropTypes.any,
+  usd: PropTypes.any
 }
 
 const ResultComponent = (props) => {

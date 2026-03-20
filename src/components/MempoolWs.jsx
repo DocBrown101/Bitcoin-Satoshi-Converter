@@ -24,9 +24,9 @@ const formatDate = (date, timeZone, locales) => {
 };
 
 // https://mempool.space/de/docs/api/websocket
-export default function MempoolWsComponent({...props}) {
+export default function MempoolWsComponent() {
   const wsUrl = "wss://mempool.space/api/v1/ws";
-  //const wsUrl = "ws://192.168.0.39:3006/api/v1/ws";
+  // const wsUrl = "ws://192.168.0.39:3006/api/v1/ws";
 
   const [webSocketReady, setWebSocketReady] = useState(false);
   const [lastFeeData, setLastFeeData] = useState();
@@ -55,12 +55,9 @@ export default function MempoolWsComponent({...props}) {
     newWebSocket.onmessage = (event) => {
       const serverData = JSON.parse(event.data);
 
-      // console.dir(serverData);
-
       if (serverData.da) {
         setLastTimeAvg(serverData.da.timeAvg);
       }
-
       if (serverData.fees) {
         setLastFeeData(serverData.fees);
       }

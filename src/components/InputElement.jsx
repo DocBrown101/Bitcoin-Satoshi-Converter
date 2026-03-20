@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types"
 import {NumericFormat} from 'react-number-format';
 
 import {InputAdornment, TextField} from '@mui/material';
@@ -45,4 +46,12 @@ export default function InputElement(props) {
       }}
     />
   );
+}
+
+InputElement.propTypes = {
+  disabled: PropTypes.any,
+  endLabel: PropTypes.any,
+  label: PropTypes.any,
+  onInputChange: PropTypes.any,
+  value: PropTypes.any
 }
