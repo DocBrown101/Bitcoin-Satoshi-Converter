@@ -41,7 +41,7 @@ export default function App() {
       <ThemeProvider theme={appliedTheme}>
         <CssBaseline />
         <Router>
-          <HeaderToolbar isDarkTheme={isDarkTheme} useStateCallback={setIsDarkTheme} />
+          <HeaderToolbar isDarkTheme={isDarkTheme} onThemeChange={setIsDarkTheme} />
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
               <Route path='/' element={<HomePage />} />
