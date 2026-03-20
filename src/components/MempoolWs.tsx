@@ -79,7 +79,7 @@ export default function MempoolWsComponent() {
       }
 
       const lastBlock = serverData.blocks
-        ? serverData.blocks.sort((a, b) => b.height - a.height)[0]
+        ? serverData.blocks.toSorted((a, b) => b.height - a.height)[0]
         : serverData.block;
 
       if (lastBlock) {
@@ -104,7 +104,7 @@ export default function MempoolWsComponent() {
 
   const {t} = useTranslation();
   const isLoading = !webSocketReady || !lastFeeData || !lastBlockData;
-  const loadingTitle = !webSocketReady ? t("PleaseWait") : "Waiting for message from server ...";
+  const loadingTitle = webSocketReady ? "Waiting for message from server ..." : t("PleaseWait");
   const normalTitle = "Bitcoin Halving Event";
 
   return (
