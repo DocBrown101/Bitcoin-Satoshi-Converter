@@ -6,7 +6,7 @@ export default defineConfig({
   build: {
     outDir: 'build',
     target: 'esnext',
-    minify: 'esbuild',
+    minify: 'oxc',
     sourcemap: false,
     chunkSizeWarningLimit: 600,
     rollupOptions: {
