@@ -1,20 +1,19 @@
 # build
-FROM node:lts AS build
+FROM --platform=$BUILDPLATFORM node:24-alpine AS build
 WORKDIR /app
-COPY package.json ./
-COPY package-lock.json ./
-COPY index.html ./
-COPY vite.config.js ./
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY index.html vite.config.ts tsconfig.json vite-env.d.ts ./
 COPY public ./public
 COPY src ./src
-RUN npm install
+COPY tests ./tests
 RUN npm run build
 
 # production
-FROM nginx:1.27.5-alpine
-RUN addgroup -S nonroot && adduser -S nonroot -G nonroot
-USER nonroot
+FROM nginxinc/nginx-unprivileged:1.30.5-alpine
+USER root
+RUN sed -i 's/worker_processes .*/worker_processes 1;/' /etc/nginx/nginx.conf
+USER 1000:1000
 COPY --from=build /app/build /usr/share/nginx/html
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 8080

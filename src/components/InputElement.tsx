@@ -1,7 +1,9 @@
-import {NumericFormat, NumberFormatValues, SourceInfo} from 'react-number-format';
+import { NumericFormat, NumberFormatValues, SourceInfo } from 'react-number-format';
 
-import {InputAdornment, TextField} from '@mui/material';
-import {Input as InputIcon} from '@mui/icons-material';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputIcon from '@mui/icons-material/Input';
+import TextField from '@mui/material/TextField';
+import { isSafeAmount } from '../utils/currencyConverter';
 
 interface InputElementProps {
   readonly label: string;
@@ -11,7 +13,8 @@ interface InputElementProps {
   readonly onInputChange: (values: NumberFormatValues, sourceInfo: SourceInfo) => void;
 }
 
-export default function InputElement({label, endLabel, value, disabled, onInputChange}: InputElementProps) {
+export default function InputElement({ label, endLabel, value, disabled, onInputChange }: InputElementProps) {
+  const decimalScale = endLabel === 'BTC' ? 8 : endLabel === 'sat' ? 0 : 2;
   return (
     <NumericFormat
       id={label}
@@ -20,32 +23,32 @@ export default function InputElement({label, endLabel, value, disabled, onInputC
       onValueChange={onInputChange}
       disabled={disabled}
       customInput={TextField}
-      inputMode="numeric"
-      InputProps={{
-        sx: {
-          "&.Mui-focused .MuiInputAdornment-root .MuiSvgIcon-root": {
-            color: 'primary.main'
-          }
+      slotProps={{
+        htmlInput: { inputMode: endLabel === 'sat' ? 'numeric' : 'decimal', autoComplete: 'off' },
+        input: {
+          sx: {
+            '&.Mui-focused .MuiInputAdornment-root .MuiSvgIcon-root': {
+              color: 'primary.main',
+            },
+          },
+          startAdornment: (
+            <InputAdornment disablePointerEvents={true} position='start'>
+              <InputIcon />
+            </InputAdornment>
+          ),
+          endAdornment: (
+            <InputAdornment disablePointerEvents={true} position='end'>
+              {endLabel}
+            </InputAdornment>
+          ),
         },
-        startAdornment: (
-          <InputAdornment disablePointerEvents={true} position="start">
-            <InputIcon />
-          </InputAdornment>
-        ),
-        endAdornment: (
-          <InputAdornment disablePointerEvents={true} position="end">
-            {endLabel}
-          </InputAdornment>
-        ),
-        autoComplete: 'off'
       }}
-      thousandSeparator="."
-      decimalSeparator=","
+      thousandSeparator='.'
+      decimalSeparator=','
+      decimalScale={decimalScale}
+      allowNegative={false}
       valueIsNumericString
-      isAllowed={(values) => {
-        const {floatValue} = values;
-        return floatValue === undefined || floatValue >= 0;
-      }}
+      isAllowed={({ value }) => value === '' || value === '.' || isSafeAmount(value, decimalScale)}
     />
   );
 }

@@ -18,5 +18,5 @@
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
-  "include": ["src", "vite-env.d.ts"]
+  "include": ["src", "tests", "vite-env.d.ts", "vite.config.ts"]
 }

@@ -10,8 +10,8 @@ export interface HalvingData {
   blocksToNextHalving: number;
   timeToHalving: number;
   estimatedDate: Date;
-  estimatedDays: number | undefined;
-  estimatedHours: number | undefined;
+  estimatedDays: number;
+  estimatedHours: number;
   estimatedMinutes: number;
 }
 
@@ -27,26 +27,18 @@ function calculateBlocksToDifficultyAdjustment(lastBlockHeight: number): number 
   return DIFFICULTY_EPOCH - blocksInCurrentDifficulty;
 }
 
-function splitDuration(ms: number): [number | undefined, number | undefined, number] {
+function splitDuration(ms: number): [number, number, number] {
   const d = Math.floor(ms / MS_IN_DAY);
   const h = Math.floor((ms - MS_IN_DAY * d) / MS_IN_HOUR);
   const m = Math.floor((ms - MS_IN_DAY * d - MS_IN_HOUR * h) / MS_IN_MINUTE);
 
-  let days: number | undefined = undefined;
-  let hours: number | undefined = undefined;
-
-  if (d > 0) {
-    days = d;
-  }
-
-  if (d > 0 || h > 0) {
-    hours = h;
-  }
-
-  return [days, hours, m];
+  return [d, h, m];
 }
 
 function calculateHalvingData(currentAverageBlockTime: number, lastBlockHeight: number): HalvingData {
+  if (!Number.isFinite(currentAverageBlockTime) || currentAverageBlockTime <= 0 || !Number.isSafeInteger(lastBlockHeight) || lastBlockHeight < 0) {
+    throw new RangeError('Invalid block time or height');
+  }
   const blocksToNextHalving = calculateBlocksToHalving(lastBlockHeight);
 
   const blocksInCurrentDifficulty = Math.min(

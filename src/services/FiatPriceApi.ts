@@ -1,5 +1,3 @@
-import {readLocalStorage} from "./LocalStorage";
-
 export interface FiatPriceData {
   ID: number;
   EUR: number;
@@ -7,52 +5,49 @@ export interface FiatPriceData {
   API: string;
 }
 
-export function fetchFiatPrice(): Promise<FiatPriceData> {
-  const id = readLocalStorage<number>("api-ID", 10);
-  console.log(id);
+const providers: Record<number, {name: string; url: string}> = {
+  20: {name: 'CoinGecko', url: 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur,usd'},
+  30: {name: 'Coinpaprika', url: 'https://api.coinpaprika.com/v1/tickers/btc-bitcoin?quotes=EUR,USD'},
+  40: {name: 'Kraken', url: 'https://api.kraken.com/0/public/Ticker?pair=BTCEUR,BTCUSD'},
+};
 
-  if (id === 10) {
-    return fetch(
-      "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=EUR,USD"
-    ).then((response) =>
-      response.json().then((data: { EUR: number; USD: number }) => ({
-        ID: 10,
-        EUR: data.EUR,
-        USD: data.USD,
-        API: "CryptoCompare",
-      }))
-    );
-  } else if (id === 20) {
-    return fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur,usd"
-    ).then((response) =>
-      response.json().then((data: { bitcoin: { eur: number; usd: number } }) => ({
-        ID: 20,
-        EUR: data.bitcoin.eur,
-        USD: data.bitcoin.usd,
-        API: "CoinGecko",
-      }))
-    );
-  } else if (id === 30) {
-    return fetch(
-      "https://api.coinpaprika.com/v1/tickers/btc-bitcoin?quotes=EUR,USD"
-    ).then((response) =>
-      response.json().then((data: { quotes: { EUR: { price: string }; USD: { price: string } } }) => ({
-        ID: 30,
-        EUR: Number.parseFloat(data.quotes.EUR.price),
-        USD: Number.parseFloat(data.quotes.USD.price),
-        API: "coinpaprika",
-      }))
-    );
-  } else {
-    return fetch("https://api.kraken.com/0/public/Ticker?pair=BTCEUR,BTCUSD").then(
-      (response) =>
-        response.json().then((data: { result: { XXBTZEUR: { a: string[] }; XXBTZUSD: { a: string[] } } }) => ({
-          ID: 40,
-          EUR: Number.parseFloat(data.result.XXBTZEUR.a[0]),
-          USD: Number.parseFloat(data.result.XXBTZUSD.a[0]),
-          API: "Kraken",
-        }))
-    );
+export const normalizeApiId = (id: unknown): number => {
+  return typeof id === 'number' && Object.hasOwn(providers, id) ? id : 40;
+};
+
+const parsePrice = (value: unknown): number => {
+  return typeof value === 'number' || (typeof value === 'string' && value.trim() !== '') ? Number(value) : NaN;
+};
+
+export async function fetchFiatPrice(apiId = 40, signal?: AbortSignal): Promise<FiatPriceData> {
+  const id = normalizeApiId(apiId);
+  const provider = providers[id];
+  const response = await fetch(provider.url, {signal});
+  if (!response.ok) throw new Error(`${provider.name}: HTTP ${response.status}`);
+
+  const data = await response.json();
+  let eur: unknown;
+  let usd: unknown;
+  switch (id) {
+    case 20:
+      eur = data?.bitcoin?.eur;
+      usd = data?.bitcoin?.usd;
+      break;
+    case 30:
+      eur = data?.quotes?.EUR?.price;
+      usd = data?.quotes?.USD?.price;
+      break;
+    case 40:
+      if (data?.error?.length) throw new Error(`${provider.name}: ${data.error.join(', ')}`);
+      eur = data?.result?.XXBTZEUR?.c?.[0];
+      usd = data?.result?.XXBTZUSD?.c?.[0];
+      break;
   }
+
+  const EUR = parsePrice(eur);
+  const USD = parsePrice(usd);
+  if (!Number.isFinite(EUR) || EUR <= 0 || !Number.isFinite(USD) || USD <= 0) {
+    throw new Error(`${provider.name}: invalid price response`);
+  }
+  return {ID: id, EUR, USD, API: provider.name};
 }

@@ -5,24 +5,6 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'build',
-    target: 'esnext',
-    minify: 'oxc',
-    sourcemap: false,
-    chunkSizeWarningLimit: 600,
-    rollupOptions: {
-      output: {
-        manualChunks: (id) => {
-          if (id.includes('react') || id.includes('node_modules/@mui/') || id.includes('node_modules/@emotion/')) {
-            return 'react-mui-emotion';
-          }
-          if (id.includes('i18next')) {
-            return 'i18n';
-          }
-          if (id.includes('node_modules')) {
-            return 'node-modules';
-          }
-        },
-      }
-    },
+    target: ['chrome117', 'edge121', 'firefox121', 'safari17'],
   },
 });

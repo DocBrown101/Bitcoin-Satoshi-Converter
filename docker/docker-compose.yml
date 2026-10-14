@@ -4,18 +4,14 @@ services:
     container_name: bitcoin-converter
     restart: on-failure:1
     ports:
-      - 8080:80
+      - 8080:8080
     user: 1000:1000
     security_opt:
       - apparmor:docker-default
-      - no-new-privileges
+      - no-new-privileges:true
     cpu_shares: 10
     pids_limit: 10
     mem_limit: 100m
     read_only: true
-    volumes:
-      # Use the same time zone as the host machine.
-      - /etc/localtime:/etc/localtime:ro
     tmpfs:
-      - /var/run:mode=770,size=512K,uid=1000,gid=1000
-      - /var/cache/nginx:mode=770,size=512K,uid=1000,gid=1000
+      - /tmp:rw,noexec,nosuid,size=16m,uid=1000,gid=1000,mode=1770

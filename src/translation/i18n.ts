@@ -4,6 +4,10 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import en from "./en.json";
 import de from "./de.json";
 
+i18n.on('languageChanged', (language) => {
+  document.documentElement.lang = language.startsWith('de') ? 'de' : 'en';
+});
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
@@ -13,6 +17,8 @@ i18n
       de: { translation: de },
     },
     fallbackLng: "en",
+    supportedLngs: ['de', 'en'],
+    load: 'languageOnly',
     debug: false,
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default

@@ -1,11 +1,16 @@
-import React, {ReactNode} from 'react';
-import {NumericFormat} from 'react-number-format';
-import {useTranslation} from 'react-i18next';
+import { type ReactNode, useState } from 'react';
+import { NumericFormat } from 'react-number-format';
+import { useTranslation } from 'react-i18next';
 
-import {Grid, Box, Paper, Typography, IconButton} from '@mui/material';
-
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Alert from '@mui/material/Alert';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
+import Box from '@mui/material/Box';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import Snackbar from '@mui/material/Snackbar';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 import ConverterStore from '../stores/ConverterStore';
 import InputElement from './InputElement';
@@ -20,85 +25,77 @@ export default function Converter() {
   const onBitcoinInputChange = ConverterStore((state) => state.onBitcoinInputChange);
   const onSatoshiInputChange = ConverterStore((state) => state.onSatoshiInputChange);
   const resetConvertedState = ConverterStore((state) => state.resetConvertedState);
-  const {t} = useTranslation();
-  const copyToClipboard = (text: number | string) => {
-    if ('clipboard' in navigator) {
-      navigator.clipboard.writeText(String(text));
+  const { t } = useTranslation();
+  const [clipboardError, setClipboardError] = useState(false);
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      setClipboardError(true);
     }
   };
   return (
-    <Box my={2}>
+    <Box sx={{ my: 2 }}>
       <Paper>
-        <Box p={2}>
-          <Box m="auto" textAlign="center">
-            <Typography color="secondary" variant="h6">
-              {Number(oneFiatSats) > 0 ?
-                <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" mb={2}>
-                  <NumericFormat value={oneFiatSats}
-                    displayType={'text'}
-                    decimalScale={0}
-                    fixedDecimalScale={true}
-                    prefix={'1 € ≙ '}
-                    suffix={' シ Satoshi'}
-                    thousandSeparator={'.'}
-                    decimalSeparator={','} />
+        <Box sx={{ p: 2 }}>
+          <Box sx={{ m: 'auto', textAlign: 'center' }}>
+            <Typography color='secondary' variant='h6'>
+              {Number(oneFiatSats) > 0 ? (
+                <Box sx={{ fontFamily: 'Monospace', fontWeight: 'fontWeightBold', fontSize: 'inherit', mb: 2 }}>
+                  <NumericFormat value={oneFiatSats} displayType={'text'} decimalScale={0} fixedDecimalScale={true} prefix={'1 € ≙ '} suffix={' シ Satoshi'} thousandSeparator={'.'} decimalSeparator={','} />
                 </Box>
-                :
-                <Box fontFamily="Monospace" fontWeight="fontWeightBold" fontSize="inherit" mb={2}>1 € ≙ ? Satoshi</Box>
-              }
+              ) : (
+                <Box sx={{ fontFamily: 'Monospace', fontWeight: 'fontWeightBold', fontSize: 'inherit', mb: 2 }}>1 € ≙ ? Satoshi</Box>
+              )}
             </Typography>
-            <Typography variant="h6">{t("EnterAmount")}</Typography>
+            <Typography variant='h6'>{t('EnterAmount')}</Typography>
           </Box>
-          <Grid container justifyContent="center" size={{xs: 12}} spacing={0}>
-            <GridRowComponent
-              input={
-                <InputElement label="€ Euro" endLabel="EUR" value={convertedEuro} disabled={eurFiatPrice <= 0} onInputChange={onEuroInputChange} />
-              }
+
+          <Stack spacing={2} sx={{ alignItems: 'center', mt: 1, mb: 2 }}>
+            <InputRow
+              input={<InputElement label='€ Euro' endLabel='EUR' value={convertedEuro} disabled={eurFiatPrice <= 0} onInputChange={onEuroInputChange} />}
               button={
-                <IconButton sx={{mt: 1, ml: 1}} aria-label="Copy" onClick={() => resetConvertedState()}>
+                <IconButton aria-label={t('ClearAmounts')} onClick={() => resetConvertedState()}>
                   <BackspaceOutlinedIcon />
                 </IconButton>
-              } />
-
-            <GridRowComponent
-              input={
-                <InputElement label="฿ Bitcoin" endLabel="BTC" value={convertedBitcoin} disabled={eurFiatPrice <= 0} onInputChange={onBitcoinInputChange} />
               }
+            />
+            <InputRow
+              input={<InputElement label='฿ Bitcoin' endLabel='BTC' value={convertedBitcoin} disabled={eurFiatPrice <= 0} onInputChange={onBitcoinInputChange} />}
               button={
-                <IconButton sx={{mt: 1, ml: 1}} aria-label="Copy" disabled={!convertedBitcoin} onClick={() => copyToClipboard(convertedBitcoin)}>
+                <IconButton aria-label={t('CopyBitcoin')} disabled={!convertedBitcoin} onClick={() => copyToClipboard(convertedBitcoin)}>
                   <ContentCopyIcon />
                 </IconButton>
-              } />
-
-            <GridRowComponent
-              input={
-                <InputElement label="シ Satoshi" endLabel="sat" value={convertedSatoshi} disabled={eurFiatPrice <= 0} onInputChange={onSatoshiInputChange} />
               }
+            />
+            <InputRow
+              input={<InputElement label='シ Satoshi' endLabel='sat' value={convertedSatoshi} disabled={eurFiatPrice <= 0} onInputChange={onSatoshiInputChange} />}
               button={
-                <IconButton sx={{mt: 1, ml: 1}} aria-label="Copy" disabled={!convertedSatoshi} onClick={() => copyToClipboard(convertedSatoshi)}>
+                <IconButton aria-label={t('CopySatoshi')} disabled={!convertedSatoshi} onClick={() => copyToClipboard(convertedSatoshi)}>
                   <ContentCopyIcon />
                 </IconButton>
-              } />
-          </Grid>
+              }
+            />
+          </Stack>
         </Box>
-      </Paper >
-    </Box >
+      </Paper>
+      <Snackbar open={clipboardError} autoHideDuration={6000} onClose={() => setClipboardError(false)}>
+        <Alert severity='error' onClose={() => setClipboardError(false)}>
+          {t('CopyFailed')}
+        </Alert>
+      </Snackbar>
+    </Box>
   );
 }
 
-interface GridRowComponentProps {
+interface InputRowProps {
   input: ReactNode;
   button: ReactNode;
 }
 
-const GridRowComponent = ({input, button}: GridRowComponentProps) => (
-  <React.Fragment>
-    <Grid size={{xs: 2, sm: 3, md: 4}} />
-    <Grid size={{xs: 8, sm: 6, md: 4}} sx={{maxWidth: "300px", mb: 2}}>
-      {input}
-    </Grid>
-    <Grid size={{xs: 2, sm: 3, md: 4}}>
-      {button}
-    </Grid>
-  </React.Fragment>
+const InputRow = ({ input, button }: InputRowProps) => (
+  <Box sx={{ display: 'grid', gridTemplateColumns: '40px minmax(0, 300px) 40px', gap: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+    <Box sx={{ gridColumn: 2, minWidth: 0, '& .MuiTextField-root': { width: '100%' } }}>{input}</Box>
+    <Box sx={{ gridColumn: 3 }}>{button}</Box>
+  </Box>
 );

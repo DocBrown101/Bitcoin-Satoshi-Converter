@@ -12,7 +12,7 @@ Easy conversion between BTC, EUR and Satoshi
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=DocBrown101_Bitcoin-Satoshi-Converter&metric=ncloc)](https://sonarcloud.io/dashboard?id=DocBrown101_Bitcoin-Satoshi-Converter)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=DocBrown101_Bitcoin-Satoshi-Converter&metric=security_rating)](https://sonarcloud.io/dashboard?id=DocBrown101_Bitcoin-Satoshi-Converter)
 
-Multi-arch builds for **linux/amd64** and **linux/arm/v7**
+Multi-arch builds for **linux/amd64** and **linux/arm64**
 
 ![Preview](https://github.com/DocBrown101/Bitcoin-Satoshi-Converter/blob/main/light_dark.png)
 
@@ -23,44 +23,70 @@ Multi-arch builds for **linux/amd64** and **linux/arm/v7**
 ### Docker Compose:
 
 ```yaml
-version: '2.4'
-
 services:
   app:
     image: docbrown101/bitcoin-satoshi-converter:latest
     container_name: BTC-converter
     ports:
-      - 8080:80
+      - 8080:8080
     user: 1000:1000
     read_only: true
     tmpfs:
-      - /var/run:mode=770,size=512K,uid=1000,gid=1000
-      - /var/cache/nginx:mode=770,size=512K,uid=1000,gid=1000
+      - /tmp:rw,noexec,nosuid,size=16m,uid=1000,gid=1000,mode=1770
 ```
 
-## Available Scripts
+Run the published image with `docker compose -f docker/docker-compose.yml up -d`.
+The app is available at [http://localhost:8080](http://localhost:8080).
 
-In the project directory, you can run:
+To build and run the current source locally:
 
-### `npm start`
+```sh
+docker compose -f docker/docker-compose.dev.yml up --build -d
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:9876](http://localhost:9876). The container runs as UID/GID
+1000 on port **8080**, with a read-only filesystem and a writable `/tmp`.
+Older published images used container port 80; update existing port mappings
+when upgrading to this image.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Local development
 
-### `npm run build`
+Requires **Node.js 24 or newer** and npm. Browser support: Chrome 117+, Edge 121+,
+Firefox 121+, and Safari 17+.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```sh
+npm ci
+npm run dev
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Open [http://localhost:5173](http://localhost:5173). Vite reloads the app when source files change.
+
+## Available scripts
+
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the development server. |
+| `npm run typecheck` | Check application, tests and Vite configuration with TypeScript. |
+| `npm test` | Run conversion, state, API and blockchain regression tests using Node's built-in test runner. |
+| `npm run build` | Type-check and build the production app into `build/`. |
+| `npm run preview` | Serve the production build locally on port 4173. |
+| `npm run check` | Run regression tests, type-check and build. |
+
+Pull requests run checks and a read-only, non-root Docker smoke test. Successful
+checks on `main` or a manual workflow run publish the multi-architecture image to Docker Hub.
+
+## Conversion and live data
+
+- Euro amounts support two decimal places, BTC eight, and satoshis whole numbers.
+- Amounts are limited to JavaScript's safe integer range in cents or satoshis. Results outside that range remain blank. Euro-to-BTC conversions round once to whole satoshis so both Bitcoin fields agree.
+- Changing the live price recalculates results while preserving the last amount entered.
+- Choose the price provider and language in Settings. Theme, language and provider preferences are saved locally.
+- Kraken is the default provider. Old CryptoCompare selections automatically use Kraken because CryptoCompare now requires authentication.
+- Failed price requests can be retried with the refresh button. If a refresh fails after a successful request, the last price remains visible alongside the error.
+- Blockchain data reconnects automatically after a dropped connection. Displayed fee estimates assume a transaction size of 140 vB.
 
 ### Usable Fiat Price APIs
 
-- https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=EUR,USD
 - https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur,usd
 - https://api.coinpaprika.com/v1/tickers/btc-bitcoin?quotes=EUR,USD
 - https://api.kraken.com/0/public/Ticker?pair=BTCEUR,BTCUSD

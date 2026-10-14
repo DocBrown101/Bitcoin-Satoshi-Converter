@@ -1,29 +1,34 @@
 import {create} from 'zustand';
-import {convertEuroToSats, convertEuroToBtc, convertBtcToSats, convertBtcToEuro, convertSatsToBtc, convertSatsToEuro, calculateOneFiatSats} from '../utils/currencyConverter';
-
-interface SourceInfo {
-  source: string;
-}
-
-interface NumberFormatValues {
-  value: string;
-  formattedValue: string;
-  floatValue: number | undefined;
-}
+import type {NumberFormatValues, SourceInfo} from 'react-number-format';
+import {convertEuroToSats, convertBtcToSats, convertSatsToBtc, convertSatsToEuro, calculateOneFiatSats, isSafeAmount} from '../utils/currencyConverter.ts';
 
 const INITIAL_SIM_PRICE = 85_000;
+type Currency = 'EUR' | 'BTC' | 'sat';
+
+const convertAmount = (amount: string, inputCurrency: Currency, price: number) => {
+  const sats = inputCurrency === 'EUR' ? convertEuroToSats(amount, price)
+    : inputCurrency === 'BTC' ? convertBtcToSats(amount) : amount;
+  return {
+    inputCurrency,
+    convertedEuro: inputCurrency === 'EUR' ? amount : convertSatsToEuro(sats, price),
+    convertedBitcoin: inputCurrency === 'BTC' ? amount : convertSatsToBtc(sats),
+    convertedSatoshi: sats
+  };
+};
 
 interface ConverterState {
   eurFiatPrice: number;
   oneFiatSats: string;
-  convertedBitcoin: number | string;
+  inputCurrency: Currency;
+  convertedBitcoin: string;
   convertedSatoshi: string;
-  convertedEuro: number | string;
+  convertedEuro: string;
 
-  simSats: string | number;
-  simFiatPrice: number;
+  simSats: string;
+  simFiatPrice: string;
   simSliderPrice: number;
   simOneFiatSats: string;
+  simPriceInitialized: boolean;
 
   setEurFiatPrice: (eurFiatPrice: number) => void;
   onEuroInputChange: (values: NumberFormatValues, sourceInfo: SourceInfo) => void;
@@ -37,27 +42,32 @@ interface ConverterState {
 const useStore = create<ConverterState>((set) => ({
   eurFiatPrice: 0,
   oneFiatSats: '0',
+  inputCurrency: 'EUR',
   convertedBitcoin: '',
   convertedSatoshi: '',
   convertedEuro: '',
 
-  simSats: 0,
-  simFiatPrice: 10,
+  simSats: convertEuroToSats(10, INITIAL_SIM_PRICE),
+  simFiatPrice: '10',
   simSliderPrice: INITIAL_SIM_PRICE,
   simOneFiatSats: calculateOneFiatSats(INITIAL_SIM_PRICE),
+  simPriceInitialized: false,
 
   setEurFiatPrice: (eurFiatPrice) => {
+    eurFiatPrice = Number.isFinite(eurFiatPrice) && eurFiatPrice > 0 ? eurFiatPrice : 0;
     set((state) => {
-      const initialSimPrice = eurFiatPrice > 0 ? eurFiatPrice : INITIAL_SIM_PRICE;
-      const shouldUpdateSimPrice = state.simSliderPrice === INITIAL_SIM_PRICE || state.simSliderPrice === 0;
+      const amount = state.inputCurrency === 'EUR' ? state.convertedEuro : state.inputCurrency === 'BTC' ? state.convertedBitcoin : state.convertedSatoshi;
+      const shouldUpdateSimPrice = !state.simPriceInitialized && eurFiatPrice > 0;
 
       return {
+        ...convertAmount(amount, state.inputCurrency, eurFiatPrice),
         eurFiatPrice,
         oneFiatSats: calculateOneFiatSats(eurFiatPrice),
         ...(shouldUpdateSimPrice && {
-          simSliderPrice: initialSimPrice,
-          simSats: convertEuroToSats(state.simFiatPrice, initialSimPrice),
-          simOneFiatSats: calculateOneFiatSats(initialSimPrice)
+          simPriceInitialized: true,
+          simSliderPrice: eurFiatPrice,
+          simSats: convertEuroToSats(state.simFiatPrice, eurFiatPrice),
+          simOneFiatSats: calculateOneFiatSats(eurFiatPrice)
         })
       };
     });
@@ -66,34 +76,19 @@ const useStore = create<ConverterState>((set) => ({
   onEuroInputChange: (values, sourceInfo) => {
     if (sourceInfo.source === 'prop') return;
 
-    const {value: euroAmount} = values;
-    set((state) => ({
-      convertedBitcoin: convertEuroToBtc(euroAmount, state.eurFiatPrice),
-      convertedSatoshi: convertEuroToSats(euroAmount, state.eurFiatPrice),
-      convertedEuro: euroAmount
-    }));
+    set((state) => convertAmount(values.value, 'EUR', state.eurFiatPrice));
   },
 
   onBitcoinInputChange: (values, sourceInfo) => {
     if (sourceInfo.source === 'prop') return;
 
-    const {value: btcAmount} = values;
-    set((state) => ({
-      convertedBitcoin: btcAmount,
-      convertedSatoshi: convertBtcToSats(btcAmount),
-      convertedEuro: convertBtcToEuro(btcAmount, state.eurFiatPrice)
-    }));
+    set((state) => convertAmount(values.value, 'BTC', state.eurFiatPrice));
   },
 
   onSatoshiInputChange: (values, sourceInfo) => {
     if (sourceInfo.source === 'prop') return;
 
-    const {value: satsAmount} = values;
-    set((state) => ({
-      convertedBitcoin: convertSatsToBtc(satsAmount),
-      convertedSatoshi: satsAmount,
-      convertedEuro: convertSatsToEuro(satsAmount, state.eurFiatPrice)
-    }));
+    set((state) => convertAmount(values.value, 'sat', state.eurFiatPrice));
   },
 
   resetConvertedState: () => {
@@ -105,16 +100,17 @@ const useStore = create<ConverterState>((set) => ({
   },
 
   onSimFiatPriceChange: (euroAmount) => {
-    const fiatAmount = Number.parseFloat(euroAmount);
+    const fiatAmount = isSafeAmount(euroAmount, 2) ? euroAmount : '';
     set((state) => ({
       simFiatPrice: fiatAmount,
-      simSats: convertEuroToSats(fiatAmount, state.simSliderPrice),
-      simOneFiatSats: calculateOneFiatSats(state.simSliderPrice)
+      simSats: convertEuroToSats(fiatAmount, state.simSliderPrice)
     }));
   },
 
   onSimBtcPriceChange: (btcPrice) => {
+    btcPrice = Number.isFinite(btcPrice) && btcPrice >= 0 ? btcPrice : 0;
     set((state) => ({
+      simPriceInitialized: true,
       simSliderPrice: btcPrice,
       simSats: convertEuroToSats(state.simFiatPrice, btcPrice),
       simOneFiatSats: calculateOneFiatSats(btcPrice)
